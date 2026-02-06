@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verification of Payee для СЕП НБУ - Презентація для CIO</title>
+    <title>Система перевірки отримувача для СЕП НБУ - Презентація для CIO</title>
     <style>
         * {
             margin: 0;
@@ -63,22 +63,52 @@
         }
 
         .slide.title-slide h1 {
-            font-size: 3.5em;
-            margin-bottom: 20px;
+            font-size: 4.5em;
+            margin-bottom: 15px;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
         }
 
         .slide.title-slide .subtitle {
-            font-size: 1.8em;
-            margin-bottom: 40px;
-            opacity: 0.9;
+            font-size: 2em;
+            margin-bottom: 50px;
+            opacity: 0.85;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .slide.title-slide .english-title {
+            font-size: 1.4em;
+            margin-top: 15px;
+            opacity: 0.7;
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: 2px;
         }
 
         .slide.title-slide .meta {
             font-size: 1.2em;
-            margin-top: 60px;
+            margin-top: 70px;
             opacity: 0.8;
+        }
+
+        .slide.title-slide .meta .cio-label {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            display: inline-block;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            letter-spacing: 3px;
+        }
+
+        .slide.title-slide .meta .department {
+            font-size: 1.15em;
+            line-height: 1.6;
+            margin-top: 20px;
         }
 
         /* Regular Slides */
@@ -446,12 +476,15 @@
 
         <!-- Slide 1: Title -->
         <div class="slide active title-slide">
-            <h1>Verification of Payee</h1>
-            <div class="subtitle">Система перевірки отримувача для СЕП НБУ</div>
+            <h1>Система перевірки отримувача<br>для СЕП НБУ</h1>
+            <div class="english-title">SEP Verification of Payee (VoP SEP)</div>
             <div class="meta">
-                <p>Презентація для CIO</p>
-                <p>Департамент інформаційних технологій НБУ</p>
-                <p>Лютий 2026</p>
+                <div class="cio-label">ПРЕЗЕНТАЦІЯ ДЛЯ CIO</div>
+                <div class="department">
+                    <p>Департамент інформаційних технологій</p>
+                    <p>Національний банк України</p>
+                </div>
+                <p style="margin-top: 30px; font-size: 1.1em;">Лютий 2026</p>
             </div>
         </div>
 
@@ -1082,10 +1115,13 @@
             <h1>Дякую за увагу!</h1>
             <div class="subtitle">Запитання?</div>
             <div class="meta" style="margin-top: 60px;">
-                <p><strong>Контакти:</strong></p>
-                <p>Департамент інформаційних технологій НБУ</p>
-                <p>Email: iso20022@bank.gov.ua</p>
-                <p style="margin-top: 40px; font-size: 0.9em;">Детальна документація доступна в GitHub репозиторії</p>
+                <p style="font-size: 1.3em; font-weight: 600; margin-bottom: 20px;">Контакти:</p>
+                <div class="department">
+                    <p>Департамент інформаційних технологій</p>
+                    <p>Національний банк України</p>
+                </div>
+                <p style="margin-top: 25px;">Email: iso20022@bank.gov.ua</p>
+                <p style="margin-top: 40px; font-size: 0.9em; opacity: 0.7;">Детальна документація доступна в GitHub репозиторії</p>
             </div>
         </div>
     </div>
