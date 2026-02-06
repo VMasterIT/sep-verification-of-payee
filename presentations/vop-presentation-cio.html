@@ -242,15 +242,98 @@
         }
 
         .architecture-diagram {
-            background: #f9f9f9;
-            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .arch-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .arch-component {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
             border-radius: 15px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-            line-height: 1.8;
-            border: 2px solid #2a5298;
-            overflow-x: auto;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .arch-component h4 {
+            font-size: 1.4em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .arch-component p {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        .arch-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            flex: 0 0 80px;
+        }
+
+        .arch-arrow-right {
+            color: #2a5298;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .arch-arrow-label {
+            font-size: 0.85em;
+            color: #2a5298;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .arch-bottom {
+            display: flex;
+            justify-content: space-around;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .arch-bottom-component {
+            flex: 1;
+            background: #f5f7fa;
+            border: 3px solid #2a5298;
+            padding: 25px 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .arch-bottom-component h4 {
+            color: #1e3c72;
+            font-size: 1.2em;
+            margin-bottom: 8px;
+        }
+
+        .arch-bottom-component p {
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .arch-connector {
+            text-align: center;
+            color: #2a5298;
+            font-size: 2em;
+            margin: -15px 0;
         }
 
         .timeline {
@@ -556,37 +639,84 @@
         <div class="slide">
             <div class="content">
                 <h2>Архітектура системи</h2>
+
                 <div class="architecture-diagram">
-┌──────────────────┐          ┌──────────────────┐          ┌──────────────────┐
-│                  │          │                  │          │                  │
-│ Банк-відправник  │──────────│   VoP Router     │──────────│  Банк-отримувач  │
-│  (Requester)     │  VoP     │   (НБУ/RVM)      │  VoP     │   (Responder)    │
-│                  │ Request  │                  │ Request  │                  │
-│                  │◄─────────│                  │◄─────────│                  │
-│                  │ Response │                  │ Response │                  │
-└─────────┬────────┘          └────────┬─────────┘          └─────────┬────────┘
-          │                            │                              │
-          │                            │                              │
-          ▼                            ▼                              ▼
-    ┌──────────┐               ┌──────────────┐              ┌──────────────┐
-    │ Клієнт-  │               │ VoP Directory│              │ База даних   │
-    │ платник  │               │   Service    │              │ клієнтів     │
-    └──────────┘               └──────────────┘              └──────────────┘
+                    <!-- Main Flow -->
+                    <div class="arch-flow">
+                        <div class="arch-component">
+                            <h4>Банк-відправник</h4>
+                            <p>(Requester API)</p>
+                        </div>
+
+                        <div class="arch-arrow">
+                            <div class="arch-arrow-right">→</div>
+                            <div class="arch-arrow-label">VoP<br>Request</div>
+                        </div>
+
+                        <div class="arch-component" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+                            <h4>VoP Router</h4>
+                            <p>(НБУ / RVM)</p>
+                        </div>
+
+                        <div class="arch-arrow">
+                            <div class="arch-arrow-right">→</div>
+                            <div class="arch-arrow-label">VoP<br>Request</div>
+                        </div>
+
+                        <div class="arch-component">
+                            <h4>Банк-отримувач</h4>
+                            <p>(Responder API)</p>
+                        </div>
+                    </div>
+
+                    <!-- Return Flow -->
+                    <div class="arch-flow">
+                        <div class="arch-component" style="opacity: 0.7;">
+                            <p style="font-size: 0.9em;">↓ Response ↓</p>
+                        </div>
+
+                        <div class="arch-arrow">
+                            <div class="arch-arrow-right" style="transform: rotate(180deg);">→</div>
+                            <div class="arch-arrow-label">VoP<br>Response</div>
+                        </div>
+
+                        <div class="arch-component" style="background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%); opacity: 0.7;">
+                            <p style="font-size: 0.9em;">Маршрутизація відповіді</p>
+                        </div>
+
+                        <div class="arch-arrow">
+                            <div class="arch-arrow-right" style="transform: rotate(180deg);">→</div>
+                            <div class="arch-arrow-label">VoP<br>Response</div>
+                        </div>
+
+                        <div class="arch-component" style="opacity: 0.7;">
+                            <p style="font-size: 0.9em;">↓ Response ↓</p>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Components -->
+                    <div class="arch-connector">↓ ↓ ↓</div>
+
+                    <div class="arch-bottom">
+                        <div class="arch-bottom-component">
+                            <h4>👤 Клієнт-платник</h4>
+                            <p>Ініціює платіж,<br>бачить результат VoP</p>
+                        </div>
+
+                        <div class="arch-bottom-component">
+                            <h4>📋 VoP Directory Service</h4>
+                            <p>Реєстр учасників,<br>BIC, endpoints</p>
+                        </div>
+
+                        <div class="arch-bottom-component">
+                            <h4>💾 База клієнтів</h4>
+                            <p>Дані отримувачів<br>для перевірки</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="three-column" style="margin-top: 30px;">
-                    <div class="box">
-                        <h3>VoP Directory</h3>
-                        <p>Реєстр учасників, BIC, endpoints</p>
-                    </div>
-                    <div class="box">
-                        <h3>VoP Router</h3>
-                        <p>Маршрутизація запитів між банками</p>
-                    </div>
-                    <div class="box">
-                        <h3>APIs</h3>
-                        <p>Requester + Responder interfaces</p>
-                    </div>
+                <div class="highlight" style="margin-top: 25px;">
+                    <p style="font-size: 1.2em;"><strong>Децентралізована модель:</strong> кожен банк зберігає дані своїх клієнтів. VoP Router тільки маршрутизує запити.</p>
                 </div>
             </div>
         </div>
