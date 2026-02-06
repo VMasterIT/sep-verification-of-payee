@@ -71,7 +71,7 @@ Layer 4: Operational Security
    - Перевіряє підпис CA
    - Перевіряє термін дії (not expired)
    - Перевіряє revocation status (CRL / OCSP)
-   - Перевіряє Subject DN (NBU ID, BIC)
+   - Перевіряє Subject DN (Код ID НБУ / NBU ID)
 3. Server надсилає свій сертифікат до Client
 4. Client валідує server certificate
 5. Встановлюється зашифроване TLS з'єднання
@@ -139,7 +139,7 @@ def validate_client_certificate():
     client_dn = request.headers.get('X-Client-DN')
     # Приклад: "CN=vop.privatbank.ua,O=PrivatBank,C=UA"
 
-    # 3. Перевірити NBU ID або BIC
+    # 3. Перевірити Код ID НБУ (NBU ID)
     if not is_authorized_participant(client_dn):
         raise SecurityError('Client not authorized for VoP')
 

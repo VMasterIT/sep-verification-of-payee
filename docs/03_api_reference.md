@@ -194,8 +194,8 @@ X-Request-ID: 550e8400-e29b-41d4-a716-446655440000
 |------|-----|-------------|------|------------------|
 | `requestId` | string | Так | UUID запиту | UUID v4 |
 | `timestamp` | string | Так | Час запиту | ISO 8601 |
-| `requester.bic` | string | Так | BIC банку-відправника | ISO 9362, 8-11 символів |
-| `requester.nbuId` | string | Так | NBU ID | 6 цифр |
+| `requester.bic` | string | Ні | BIC банку-відправника (опціонально) | ISO 9362, 8-11 символів |
+| `requester.nbuId` | string | Так | Код ID НБУ (NBU ID) | 6 цифр, основний ідентифікатор |
 | `payee.iban` | string | Так | IBAN отримувача | 29 символів, UA + 27 цифр |
 | `payee.name` | string | Так | Ім'я отримувача | 1-140 символів |
 | `payee.identificationType` | string | Ні | Тип ідентифікатора | EDRPOU, INN, PASSPORT |
@@ -209,8 +209,8 @@ X-Request-ID: 550e8400-e29b-41d4-a716-446655440000
 |------|-----|-----------------|------|
 | `requestId` | string | Так | UUID запиту (echo) |
 | `timestamp` | string | Так | Час відповіді |
-| `responder.bic` | string | Ні | BIC банку-отримувача |
-| `responder.nbuId` | string | Ні | NBU ID банку-отримувача |
+| `responder.bic` | string | Ні | BIC банку-отримувача (опціонально) |
+| `responder.nbuId` | string | Так | Код ID НБУ (NBU ID) банку-отримувача |
 | `result.matchStatus` | string | Так | MATCH, NO_MATCH, CLOSE_MATCH, NOT_SUPPORTED, ERROR |
 | `result.matchScore` | number | Ні | 0-100 |
 | `result.reasonCode` | string | Так | ANNM, MBAM, ACNS, OPTO, TCHA, UNKN |

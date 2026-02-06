@@ -318,29 +318,44 @@
 
         .arch-bottom {
             display: flex;
-            justify-content: space-around;
-            gap: 40px;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
             margin-top: 20px;
+        }
+
+        .arch-spacer {
+            flex: 0 0 140px;
+            visibility: hidden;
         }
 
         .arch-bottom-component {
             flex: 1;
-            background: #f5f7fa;
-            border: 3px solid #2a5298;
-            padding: 25px 15px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1e3c72;
+            padding: 30px 20px;
+            border-radius: 15px;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 2px solid #90caf9;
         }
 
         .arch-bottom-component h4 {
             color: #1e3c72;
-            font-size: 1.2em;
+            font-size: 1.4em;
             margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .arch-bottom-component p {
-            color: #555;
-            font-size: 0.95em;
+            color: #2a5298;
+            font-size: 1em;
+            opacity: 0.95;
+            line-height: 1.4;
         }
 
         .arch-connector {
@@ -579,10 +594,10 @@
 
         <!-- Slide 1: Title -->
         <div class="slide active title-slide">
-            <h1>Система перевірки отримувача<br>для СЕП НБУ</h1>
+            <h1>Система перевірки отримувача<br>в СЕП НБУ</h1>
             <div class="english-title">SEP Verification of Payee (VoP SEP)</div>
             <div class="meta">
-                <div class="cio-label">ПРЕЗЕНТАЦІЯ ДЛЯ CIO</div>
+                <div class="cio-label">ПРЕЗЕНТАЦІЯ</div>
                 <div class="department">
                     <p>Департамент інформаційних технологій</p>
                     <p>Національний банк України</p>
@@ -702,13 +717,17 @@
                             <p>Ініціює платіж,<br>бачить результат VoP</p>
                         </div>
 
-                        <div class="arch-bottom-component">
-                            <h4>📋 VoP Directory Service</h4>
-                            <p>Реєстр учасників,<br>BIC, endpoints</p>
-                        </div>
+                        <div class="arch-spacer"></div>
 
                         <div class="arch-bottom-component">
-                            <h4>💾 База клієнтів</h4>
+                            <h4>📋 VoP Directory Service</h4>
+                            <p>Реєстр учасників,<br>Код ID НБУ, endpoints</p>
+                        </div>
+
+                        <div class="arch-spacer"></div>
+
+                        <div class="arch-bottom-component">
+                            <h4>🗄️ База клієнтів</h4>
                             <p>Дані отримувачів<br>для перевірки</p>
                         </div>
                     </div>
@@ -716,6 +735,12 @@
 
                 <div class="highlight" style="margin-top: 25px;">
                     <p style="font-size: 1.2em;"><strong>Децентралізована модель:</strong> кожен банк зберігає дані своїх клієнтів. VoP Router тільки маршрутизує запити.</p>
+                </div>
+
+                <div style="margin-top: 20px; text-align: center;">
+                    <p style="font-size: 0.9em; color: #666; font-style: italic;">
+                        <strong>RVM</strong> — Оператор, який надає послугу маршрутизації та перевірки (Routing and Verification Mechanism)
+                    </p>
                 </div>
             </div>
         </div>
@@ -805,13 +830,13 @@
                     <div class="box">
                         <h3>🇪🇺 EU - Verification of Payee</h3>
                         <ul>
-                            <li><strong>Регламент:</strong> 2024/886</li>
-                            <li><strong>Обов'язково з:</strong> 9 жовтня 2025</li>
-                            <li><strong>Для:</strong> Instant Payments (SEPA Inst)</li>
-                            <li><strong>Інфраструктура:</strong> EPC Directory Service</li>
+                            <li><strong>Запущено:</strong> Жовтень 2025 ✅</li>
+                            <li><strong>Учасники:</strong> 2,673 PSPs + 55 RVM</li>
+                            <li><strong>Охоплення:</strong> 4,000+ установ</li>
+                            <li><strong>Зростання:</strong> 3,000+ PSPs до липня 2027</li>
                         </ul>
-                        <div style="margin-top: 20px; padding: 15px; background: #f39c12; color: white; border-radius: 10px;">
-                            <strong>Важливо:</strong> Україна рухається до ЄС стандартів
+                        <div style="margin-top: 20px; padding: 15px; background: #27ae60; color: white; border-radius: 10px;">
+                            <strong>Успіх:</strong> Масштабування від 0 до 2,700 PSPs за 2 роки!
                         </div>
                     </div>
                 </div>
@@ -992,161 +1017,62 @@
             <div class="content">
                 <h2>Ресурси та бюджет</h2>
                 <div class="two-column">
-                    <div>
-                        <h3>👥 Команда (орієнтовно)</h3>
-                        <ul>
-                            <li><strong>Solution Architect:</strong> 1 особа</li>
-                            <li><strong>Backend Developers:</strong> 3-4 особи</li>
-                            <li><strong>DevOps Engineer:</strong> 1 особа</li>
-                            <li><strong>QA Engineer:</strong> 1-2 особи</li>
-                            <li><strong>Security Specialist:</strong> 1 особа</li>
-                            <li><strong>Business Analyst:</strong> 1 особа</li>
-                        </ul>
-                        <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 10px;">
-                            <strong>Всього:</strong> 8-10 спеціалістів (6 міс. розробка)
-                        </div>
+                    <div class="box">
+                        <h3>🏦 Витрати НБУ (VoP Router)</h3>
 
-                        <h3 style="margin-top: 30px;">🖥️ Інфраструктура</h3>
-                        <ul>
+                        <h4 style="font-size: 1.2em; margin-top: 15px; margin-bottom: 10px;">👥 Команда НБУ (6 міс.)</h4>
+                        <ul style="font-size: 1em;">
+                            <li>Solution Architect (1)</li>
+                            <li>Backend Developers (3-4)</li>
+                            <li>DevOps Engineer (1)</li>
+                            <li>QA Engineers (1-2)</li>
+                            <li>Security Specialist (1)</li>
+                            <li>Business Analyst (1)</li>
+                        </ul>
+
+                        <h4 style="font-size: 1.2em; margin-top: 15px; margin-bottom: 10px;">🖥️ ІТ Інфраструктура</h4>
+                        <ul style="font-size: 1em;">
                             <li>Kubernetes cluster (HA)</li>
-                            <li>Load balancers</li>
-                            <li>Databases (PostgreSQL HA)</li>
-                            <li>Redis cache</li>
+                            <li>Databases, Cache, Backup</li>
                             <li>Monitoring (Prometheus/Grafana)</li>
-                            <li>Backup systems</li>
+                            <li>Load balancers</li>
                         </ul>
-                    </div>
-                    <div>
-                        <h3>💵 Орієнтовний бюджет</h3>
-                        <table>
-                            <tr>
-                                <th>Стаття витрат</th>
-                                <th>Сума</th>
-                            </tr>
-                            <tr>
-                                <td>Розробка (6 міс.)</td>
-                                <td>₴3-4 млн</td>
-                            </tr>
-                            <tr>
-                                <td>Інфраструктура (setup)</td>
-                                <td>₴500-800 тис</td>
-                            </tr>
-                            <tr>
-                                <td>Тестування</td>
-                                <td>₴400-600 тис</td>
-                            </tr>
-                            <tr>
-                                <td>Документація</td>
-                                <td>₴200-300 тис</td>
-                            </tr>
-                            <tr>
-                                <td>Навчання банків</td>
-                                <td>₴300-400 тис</td>
-                            </tr>
-                            <tr>
-                                <td>Резерв (15%)</td>
-                                <td>₴600-900 тис</td>
-                            </tr>
-                            <tr style="background: #1e3c72; color: white; font-weight: bold;">
-                                <td>ВСЬОГО (Capex)</td>
-                                <td>₴5-7 млн</td>
-                            </tr>
-                        </table>
 
-                        <h3 style="margin-top: 20px;">📅 Операційні витрати (Opex)</h3>
-                        <ul>
-                            <li><strong>Інфраструктура:</strong> ₴150-200 тис/міс</li>
-                            <li><strong>Підтримка:</strong> ₴100-150 тис/міс</li>
-                            <li><strong>Моніторинг:</strong> ₴30-50 тис/міс</li>
+                        <div style="margin-top: 15px; padding: 15px; background: #1e3c72; color: white; border-radius: 10px; text-align: center;">
+                            <strong style="font-size: 1.1em;">Opex НБУ:</strong><br>
+                            <span style="font-size: 1.3em; font-weight: bold;">₴3-5 млн/рік</span><br>
+                            <span style="font-size: 0.9em;">(зарплата + інфраструктура)</span>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h3>🏛️ Витрати банків (Responder/Requester API)</h3>
+
+                        <h4 style="font-size: 1.2em; margin-top: 15px; margin-bottom: 10px;">💻 Розробка API (на банк)</h4>
+                        <ul style="font-size: 1em;">
+                            <li><strong>Responder API:</strong> 2-3 міс. розробки</li>
+                            <li><strong>Requester API:</strong> 1-2 міс. розробки</li>
+                            <li><strong>Інтеграція:</strong> з core banking</li>
+                            <li><strong>Тестування:</strong> unit + integration</li>
+                            <li><strong>Сертифікація:</strong> QWAC, OAuth 2.0</li>
                         </ul>
-                        <div style="margin-top: 15px; padding: 15px; background: #c8e6c9; border-radius: 10px;">
-                            <strong>Opex:</strong> ₴280-400 тис/міс (₴3.4-4.8 млн/рік)
+
+                        <h4 style="font-size: 1.2em; margin-top: 15px; margin-bottom: 10px;">💰 Орієнтовна вартість</h4>
+                        <ul style="font-size: 1em;">
+                            <li>Великі банки: ₴800к - 1.5 млн</li>
+                            <li>Середні банки: ₴400-800 тис</li>
+                            <li>Малі банки: ₴200-400 тис</li>
+                        </ul>
+
+                        <div style="margin-top: 15px; padding: 15px; background: #27ae60; color: white; border-radius: 10px; text-align: center;">
+                            <strong style="font-size: 1.1em;">Референсна реалізація:</strong><br>
+                            <span style="font-size: 1em;">НБУ надасть приклад коду і документацію</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="highlight" style="margin-top: 20px;">
-                    <strong>ROI:</strong> Економія ₴1.25+ млрд/рік vs ₴5-7 млн Capex + ₴4.8 млн/рік Opex = Окупність за 4-6 місяців! 🎯
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 11: Risks and Mitigation -->
-        <div class="slide">
-            <div class="content">
-                <h2>Ризики та мітигація</h2>
-                <div class="risk-matrix">
-                    <div class="risk-item risk-medium">
-                        <h4>⚠️ Технічні ризики</h4>
-                        <p><strong>Ризик:</strong> Проблеми з продуктивністю, недосягнення &lt;1 сек</p>
-                        <p><strong>Мітигація:</strong></p>
-                        <ul style="font-size: 0.95em;">
-                            <li>Load testing на етапі розробки</li>
-                            <li>Horizontal scaling (K8s)</li>
-                            <li>Redis caching</li>
-                            <li>Тести продуктивності</li>
-                        </ul>
-                    </div>
-
-                    <div class="risk-item risk-low">
-                        <h4>✅ Опір банків</h4>
-                        <p><strong>Ризик:</strong> Небажання банків інтегруватися</p>
-                        <p><strong>Мітигація:</strong></p>
-                        <ul style="font-size: 0.95em;">
-                            <li>Поетапне впровадження (пілот)</li>
-                            <li>Детальна документація</li>
-                            <li>Референсна реалізація</li>
-                            <li>Технічна підтримка банків</li>
-                        </ul>
-                    </div>
-
-                    <div class="risk-item risk-medium">
-                        <h4>⚠️ Проблеми matching</h4>
-                        <p><strong>Ризик:</strong> Низька точність співставлення імен</p>
-                        <p><strong>Мітигація:</strong></p>
-                        <ul style="font-size: 0.95em;">
-                            <li>Множинні алгоритми (Levenshtein + Jaro-Winkler)</li>
-                            <li>Калібрування threshold на пілоті</li>
-                            <li>ML-based matching (фаза 3)</li>
-                            <li>Збір статистики для покращення</li>
-                        </ul>
-                    </div>
-
-                    <div class="risk-item risk-low">
-                        <h4>✅ Безпека</h4>
-                        <p><strong>Ризик:</strong> Витік даних, несанкціонований доступ</p>
-                        <p><strong>Мітигація:</strong></p>
-                        <ul style="font-size: 0.95em;">
-                            <li>mTLS + OAuth 2.0 FAPI</li>
-                            <li>Data minimization (GDPR)</li>
-                            <li>Audit logging</li>
-                            <li>Penetration testing</li>
-                        </ul>
-                    </div>
-
-                    <div class="risk-item risk-medium">
-                        <h4>⚠️ Доступність</h4>
-                        <p><strong>Ризик:</strong> Downtime системи впливає на платежі</p>
-                        <p><strong>Мітигація:</strong></p>
-                        <ul style="font-size: 0.95em;">
-                            <li>HA architecture (99.9% SLA)</li>
-                            <li>Graceful degradation</li>
-                            <li>Geo-redundancy</li>
-                            <li>Automated failover</li>
-                        </ul>
-                    </div>
-
-                    <div class="risk-item risk-low">
-                        <h4>✅ Budget overrun</h4>
-                        <p><strong>Ризик:</strong> Перевитрата бюджету</p>
-                        <p><strong>Мітигація:</strong></p>
-                        <ul style="font-size: 0.95em;">
-                            <li>Резерв 15% закладено</li>
-                            <li>Agile розробка з контролем</li>
-                            <li>Weekly бюджетний tracking</li>
-                            <li>Поетапне фінансування</li>
-                        </ul>
-                    </div>
+                    <p style="font-size: 1.2em;"><strong>ROI для банківської системи:</strong> Економія ₴1.25+ млрд/рік vs витрати на впровадження = Окупність за 6-12 місяців! 🎯</p>
                 </div>
             </div>
         </div>
@@ -1178,19 +1104,19 @@
                     </div>
                 </div>
 
-                <div class="highlight" style="margin-top: 30px;">
+                <div class="highlight" style="margin-top: 25px; padding: 25px;">
                     <h3>🌍 Довгострокові перспективи (2+ роки)</h3>
-                    <ul style="font-size: 1.2em;">
-                        <li><strong>Міжнародна інтеграція:</strong> підключення до EU VoP через EPC Directory Service</li>
-                        <li><strong>Cross-border VoP:</strong> перевірка для міжнародних переказів</li>
-                        <li><strong>Open Banking:</strong> VoP API для third-party providers</li>
-                        <li><strong>AI-powered fraud detection:</strong> виявлення підозрілих патернів</li>
-                        <li><strong>Blockchain integration:</strong> незмінний audit trail</li>
+                    <ul style="font-size: 1.05em; line-height: 1.4;">
+                        <li><strong>Міжнародна інтеграція:</strong> підключення до EU VoP</li>
+                        <li><strong>Cross-border VoP:</strong> міжнародні перекази</li>
+                        <li><strong>Open Banking:</strong> API для third-party providers</li>
+                        <li><strong>AI-powered:</strong> виявлення шахрайських патернів</li>
+                        <li><strong>Blockchain:</strong> незмінний audit trail</li>
                     </ul>
                 </div>
 
-                <div style="margin-top: 30px; padding: 25px; background: #e8f5e9; border-radius: 15px; border-left: 5px solid #27ae60;">
-                    <p style="font-size: 1.3em;"><strong>Стратегічна мета:</strong> Зробити СЕП НБУ найбезпечнішою та найефективнішою платіжною системою в регіоні</p>
+                <div style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 15px; border-left: 5px solid #27ae60;">
+                    <p style="font-size: 1.2em; line-height: 1.5;"><strong>Стратегічна мета:</strong> Зробити СЕП НБУ найбезпечнішою платіжною системою в регіоні</p>
                 </div>
             </div>
         </div>
@@ -1250,7 +1176,6 @@
                     <p>Національний банк України</p>
                 </div>
                 <p style="margin-top: 25px;">Email: iso20022@bank.gov.ua</p>
-                <p style="margin-top: 40px; font-size: 0.9em; opacity: 0.7;">Детальна документація доступна в GitHub репозиторії</p>
             </div>
         </div>
     </div>

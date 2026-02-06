@@ -81,7 +81,7 @@ cat README.md
 
 ### Правила (rules/)
 1. **matching_rules.md** - Правила співставлення імен (Levenshtein, Jaro-Winkler)
-2. **validation_rules.md** (~35 стор) - Правила валідації (IBAN, BIC, тощо)
+2. **validation_rules.md** (~35 стор) - Правила валідації (IBAN, Код ID НБУ, тощо)
 3. **business_rules.md** (~30 стор) - Бізнес-правила (BR-001 до BR-094)
 4. **reason_codes.md** - Коди причин (ANNM, MBAM, ACNS, тощо)
 
