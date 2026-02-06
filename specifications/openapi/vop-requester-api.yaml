@@ -1,0 +1,534 @@
+openapi: 3.0.3
+info:
+  title: VoP Requester API (Internal Bank API)
+  description: |
+    Internal API банку-відправника для перевірки реквізитів отримувача перед відправкою платежу.
+
+    Це API використовується frontend додатками банку (web, mobile) для виклику VoP перевірки.
+    Backend банку-відправника далі перенаправляє запит до VoP Router НБУ.
+
+    **Призначення:**
+    - Перевірка реквізитів перед створенням платежу
+    - Відображення результату клієнту
+    - Історія VoP перевірок для аудиту
+
+    **Workflow:**
+    ```
+    1. Frontend → POST /payments/verify-payee
+    2. Backend → VoP Router API
+    3. Backend ← VoP Response
+    4. Frontend ← Formatted response
+    5. User confirms payment
+    6. Backend → pacs.008 to SEP NBU
+    ```
+  version: 1.0.0
+  contact:
+    name: Банк-відправник - IT Department
+    email: api@yourbank.ua
+
+servers:
+  - url: https://api.yourbank.ua
+    description: Production API
+  - url: https://api-test.yourbank.ua
+    description: Test API
+
+security:
+  - BearerAuth: []
+  - SessionToken: []
+
+tags:
+  - name: VoP Verification
+    description: Перевірка реквізитів отримувача
+  - name: VoP History
+    description: Історія VoP перевірок
+
+paths:
+  /payments/verify-payee:
+    post:
+      tags:
+        - VoP Verification
+      summary: Перевірка реквізитів отримувача
+      description: |
+        Перевіряє реквізити отримувача (IBAN + ім'я) через систему VoP перед створенням платежу.
+
+        **Процес:**
+        1. Клієнт заповнює форму платежу
+        2. Натискає "Перевірити реквізити"
+        3. Frontend викликає цей endpoint
+        4. Backend виконує VoP запит через Router
+        5. Результат повертається клієнту
+
+        **Response time:** < 2 сек (включно з VoP Router)
+      operationId: verifyPayee
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyPayeeRequest'
+            examples:
+              personal:
+                summary: Особистий рахунок
+                value:
+                  recipientName: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
+                  recipientIban: UA213223130000026007233566001
+                  recipientIdType: INN
+                  recipientIdCode: "1234567890"
+                  accountType: PERSONAL
+                  paymentType: INSTANT
+              business:
+                summary: Бізнес-рахунок
+                value:
+                  recipientName: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "МОНОБАНК"
+                  recipientIban: UA903052990000026009011702860
+                  recipientIdType: EDRPOU
+                  recipientIdCode: "14360570"
+                  accountType: BUSINESS
+                  paymentType: REGULAR
+      responses:
+        '200':
+          description: Перевірка виконана успішно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyPayeeResponse'
+              examples:
+                match:
+                  summary: Повне співпадіння
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    matchStatus: MATCH
+                    matchScore: 100
+                    verifiedName: ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ
+                    accountStatus: ACTIVE
+                    message: "✅ Реквізити підтверджені"
+                    action: CONTINUE
+                    timestamp: "2026-02-06T14:30:01Z"
+                    processingTime: 850
+                closeMatch:
+                  summary: Часткове співпадіння
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    matchStatus: CLOSE_MATCH
+                    matchScore: 87
+                    verifiedName: ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ
+                    accountStatus: ACTIVE
+                    message: "⚠️ Можлива помилка в імені. Перевірте: ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ"
+                    action: WARN
+                    timestamp: "2026-02-06T14:30:01Z"
+                    processingTime: 920
+                noMatch:
+                  summary: Не співпадає
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    matchStatus: NO_MATCH
+                    matchScore: 35
+                    accountStatus: ACTIVE
+                    message: "❌ Ім'я не співпадає з рахунком. Перевірте реквізити."
+                    action: STOP
+                    timestamp: "2026-02-06T14:30:01Z"
+                    processingTime: 780
+                notSupported:
+                  summary: Не підтримується
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    matchStatus: NOT_SUPPORTED
+                    message: "ℹ️ Перевірка реквізитів недоступна для цього рахунку"
+                    action: OPTIONAL
+                    timestamp: "2026-02-06T14:30:01Z"
+                    processingTime: 150
+                error:
+                  summary: Помилка перевірки
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    matchStatus: ERROR
+                    message: "⚠️ Помилка перевірки. Спробуйте пізніше."
+                    action: OPTIONAL
+                    timestamp: "2026-02-06T14:30:03Z"
+                    processingTime: 3000
+        '400':
+          description: Невалідний запит
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: INVALID_REQUEST
+                  message: Invalid IBAN format
+                  details: "IBAN must be 29 characters (UA + 27 digits)"
+        '401':
+          description: Невалідна автентифікація
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: UNAUTHORIZED
+                  message: Invalid or expired session token
+        '429':
+          description: Перевищено ліміт запитів
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: RATE_LIMIT_EXCEEDED
+                  message: Too many requests
+                  details: "Limit: 10 requests per minute"
+        '503':
+          description: Сервіс тимчасово недоступний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: SERVICE_UNAVAILABLE
+                  message: VoP service temporarily unavailable
+
+  /payments/vop-history:
+    get:
+      tags:
+        - VoP History
+      summary: Історія VoP перевірок
+      description: |
+        Отримати історію VoP перевірок для аудиту та аналізу.
+
+        **Використання:**
+        - Аудит операцій
+        - Аналіз якості реквізитів
+        - Виявлення підозрілих операцій
+
+        **Доступ:** Тільки для адміністраторів та compliance офіцерів
+      operationId: getVoPHistory
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: query
+          description: Фільтр за ID користувача
+          schema:
+            type: string
+        - name: matchStatus
+          in: query
+          description: Фільтр за статусом співпадіння
+          schema:
+            type: string
+            enum: [MATCH, NO_MATCH, CLOSE_MATCH, NOT_SUPPORTED, ERROR]
+        - name: from
+          in: query
+          description: Початкова дата (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          description: Кінцева дата (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          description: Кількість записів
+          schema:
+            type: integer
+            default: 50
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          description: Зсув (для пагінації)
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Список VoP перевірок
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoPHistoryResponse'
+              example:
+                total: 1234
+                limit: 50
+                offset: 0
+                items:
+                  - requestId: 550e8400-e29b-41d4-a716-446655440000
+                    timestamp: "2026-02-06T14:30:00Z"
+                    ibanMasked: "UA21********66001"
+                    matchStatus: MATCH
+                    matchScore: 100
+                    userId: user-123
+                    processingTime: 850
+                    userAction: CONTINUED
+                  - requestId: 7b3d8f90-c1e2-4567-89ab-cdef01234567
+                    timestamp: "2026-02-06T14:25:00Z"
+                    ibanMasked: "UA90********2860"
+                    matchStatus: CLOSE_MATCH
+                    matchScore: 87
+                    userId: user-456
+                    processingTime: 920
+                    userAction: CORRECTED
+        '401':
+          description: Невалідна автентифікація
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Недостатньо прав доступу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: FORBIDDEN
+                  message: Access denied. Admin role required.
+
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: Перевірка стану API
+      operationId: healthCheck
+      security: []
+      responses:
+        '200':
+          description: API працює нормально
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [healthy, degraded, unhealthy]
+                  timestamp:
+                    type: string
+                    format: date-time
+                  components:
+                    type: object
+                    properties:
+                      database:
+                        type: string
+                        enum: [up, down]
+                      vopRouter:
+                        type: string
+                        enum: [up, down]
+              example:
+                status: healthy
+                timestamp: "2026-02-06T14:30:00Z"
+                components:
+                  database: up
+                  vopRouter: up
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT access token для API автентифікації
+
+    SessionToken:
+      type: apiKey
+      in: header
+      name: X-Session-Token
+      description: Session token для користувачів (альтернатива JWT)
+
+  schemas:
+    VerifyPayeeRequest:
+      type: object
+      required:
+        - recipientName
+        - recipientIban
+      properties:
+        recipientName:
+          type: string
+          minLength: 1
+          maxLength: 140
+          description: Ім'я отримувача (ПІБ або назва компанії)
+          example: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
+        recipientIban:
+          type: string
+          pattern: '^UA\d{27}$'
+          description: IBAN отримувача (29 символів)
+          example: UA213223130000026007233566001
+        recipientIdType:
+          type: string
+          enum: [EDRPOU, INN, PASSPORT]
+          description: Тип ідентифікаційного коду
+          example: INN
+        recipientIdCode:
+          type: string
+          minLength: 8
+          maxLength: 20
+          description: Ідентифікаційний код (ЄДРПОУ, ІПН, паспорт)
+          example: "1234567890"
+        accountType:
+          type: string
+          enum: [PERSONAL, BUSINESS]
+          description: Тип рахунку отримувача
+          example: PERSONAL
+        paymentType:
+          type: string
+          enum: [INSTANT, REGULAR]
+          description: Тип платежу
+          example: INSTANT
+
+    VerifyPayeeResponse:
+      type: object
+      required:
+        - requestId
+        - matchStatus
+        - message
+        - action
+        - timestamp
+      properties:
+        requestId:
+          type: string
+          format: uuid
+          description: Унікальний ID запиту
+          example: 550e8400-e29b-41d4-a716-446655440000
+        matchStatus:
+          type: string
+          enum: [MATCH, NO_MATCH, CLOSE_MATCH, NOT_SUPPORTED, ERROR]
+          description: Статус співпадіння
+          example: MATCH
+        matchScore:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+          description: Ступінь співпадіння (0-100%)
+          example: 100
+        verifiedName:
+          type: string
+          description: Перевірене ім'я з БД банку-отримувача
+          example: ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ
+        accountStatus:
+          type: string
+          enum: [ACTIVE, CLOSED, BLOCKED]
+          description: Статус рахунку отримувача
+          example: ACTIVE
+        message:
+          type: string
+          description: Повідомлення для відображення клієнту
+          example: "✅ Реквізити підтверджені"
+        action:
+          type: string
+          enum: [CONTINUE, WARN, STOP, OPTIONAL]
+          description: |
+            Рекомендована дія для клієнта:
+            - CONTINUE: можна продовжити без попереджень
+            - WARN: показати попередження
+            - STOP: рекомендовано зупинити
+            - OPTIONAL: перевірка недоступна, опційно продовжити
+          example: CONTINUE
+        timestamp:
+          type: string
+          format: date-time
+          description: Час відповіді
+          example: "2026-02-06T14:30:01Z"
+        processingTime:
+          type: integer
+          description: Час обробки (мілісекунди)
+          example: 850
+
+    VoPHistoryResponse:
+      type: object
+      required:
+        - total
+        - limit
+        - offset
+        - items
+      properties:
+        total:
+          type: integer
+          description: Загальна кількість записів
+          example: 1234
+        limit:
+          type: integer
+          description: Кількість записів на сторінку
+          example: 50
+        offset:
+          type: integer
+          description: Зсув (offset)
+          example: 0
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VoPHistoryItem'
+
+    VoPHistoryItem:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        timestamp:
+          type: string
+          format: date-time
+          example: "2026-02-06T14:30:00Z"
+        ibanMasked:
+          type: string
+          description: Замаскований IBAN
+          example: "UA21********66001"
+        matchStatus:
+          type: string
+          enum: [MATCH, NO_MATCH, CLOSE_MATCH, NOT_SUPPORTED, ERROR]
+          example: MATCH
+        matchScore:
+          type: number
+          format: float
+          example: 100
+        userId:
+          type: string
+          description: ID користувача, який ініціював перевірку
+          example: user-123
+        processingTime:
+          type: integer
+          description: Час обробки (мс)
+          example: 850
+        userAction:
+          type: string
+          enum: [CONTINUED, CANCELLED, CORRECTED]
+          description: |
+            Дія користувача після перевірки:
+            - CONTINUED: продовжив платіж
+            - CANCELLED: скасував платіж
+            - CORRECTED: виправив реквізити
+          example: CONTINUED
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              description: Код помилки
+              example: INVALID_REQUEST
+            message:
+              type: string
+              description: Повідомлення про помилку
+              example: Invalid IBAN format
+            details:
+              type: string
+              description: Детальний опис помилки
+              example: "IBAN must be 29 characters (UA + 27 digits)"

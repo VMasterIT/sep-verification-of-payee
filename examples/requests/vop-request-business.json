@@ -1,0 +1,16 @@
+{
+  "requestId": "7b3d8f90-c1e2-4567-89ab-cdef01234567",
+  "timestamp": "2026-02-06T15:00:00Z",
+  "requester": {
+    "bic": "PBANUA2XXXX",
+    "nbuId": "300023"
+  },
+  "payee": {
+    "iban": "UA903052990000026009011702860",
+    "name": "ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ \"МОНОБАНК\"",
+    "identificationType": "EDRPOU",
+    "identificationCode": "14360570"
+  },
+  "accountType": "BUSINESS",
+  "paymentType": "REGULAR"
+}

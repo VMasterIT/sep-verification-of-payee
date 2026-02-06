@@ -1,0 +1,16 @@
+{
+  "requestId": "550e8400-e29b-41d4-a716-446655440000",
+  "timestamp": "2026-02-06T14:30:00Z",
+  "requester": {
+    "bic": "NBUBUBU1XXX",
+    "nbuId": "300001"
+  },
+  "payee": {
+    "iban": "UA213223130000026007233566001",
+    "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
+    "identificationType": "INN",
+    "identificationCode": "1234567890"
+  },
+  "accountType": "PERSONAL",
+  "paymentType": "INSTANT"
+}

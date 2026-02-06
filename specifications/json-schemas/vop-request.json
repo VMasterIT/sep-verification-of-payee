@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sep.nbu.gov.ua/schemas/vop-request.json",
+  "title": "VoP Request Schema",
+  "description": "JSON Schema для VoP Request (Verification of Payee) в СЕП НБУ",
+  "type": "object",
+  "required": ["requestId", "timestamp", "requester", "payee"],
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Унікальний ідентифікатор запиту (UUID v4)",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "examples": ["550e8400-e29b-41d4-a716-446655440000"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Час створення запиту (ISO 8601 format)",
+      "examples": ["2026-02-06T14:30:00Z", "2026-02-06T14:30:00.123Z"]
+    },
+    "requester": {
+      "type": "object",
+      "description": "Інформація про банк-відправник",
+      "required": ["bic", "nbuId"],
+      "properties": {
+        "bic": {
+          "type": "string",
+          "description": "Bank Identifier Code (ISO 9362)",
+          "pattern": "^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$",
+          "minLength": 8,
+          "maxLength": 11,
+          "examples": ["NBUBUBU1XXX", "PRYBUA2XXXX", "PBANUA2X"]
+        },
+        "nbuId": {
+          "type": "string",
+          "description": "Ідентифікатор учасника СЕП НБУ (6 цифр)",
+          "pattern": "^\\d{6}$",
+          "examples": ["300001", "300023"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "payee": {
+      "type": "object",
+      "description": "Інформація про отримувача платежу",
+      "required": ["iban", "name"],
+      "properties": {
+        "iban": {
+          "type": "string",
+          "description": "IBAN отримувача (український формат: 29 символів)",
+          "pattern": "^UA\\d{27}$",
+          "minLength": 29,
+          "maxLength": 29,
+          "examples": [
+            "UA213223130000026007233566001",
+            "UA903052990000026009011702860"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "Ім'я отримувача (ПІБ для фізичних осіб, назва для юридичних)",
+          "minLength": 1,
+          "maxLength": 140,
+          "examples": [
+            "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
+            "ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ \"МОНОБАНК\""
+          ]
+        },
+        "identificationType": {
+          "type": "string",
+          "description": "Тип ідентифікаційного коду",
+          "enum": ["EDRPOU", "PASSPORT", "INN"],
+          "examples": ["INN", "EDRPOU"]
+        },
+        "identificationCode": {
+          "type": "string",
+          "description": "Ідентифікаційний код (ЄДРПОУ, ІПН, або номер паспорта)",
+          "minLength": 8,
+          "maxLength": 20,
+          "examples": ["1234567890", "14360570", "АА123456"]
+        }
+      },
+      "additionalProperties": false,
+      "dependencies": {
+        "identificationType": ["identificationCode"],
+        "identificationCode": ["identificationType"]
+      }
+    },
+    "accountType": {
+      "type": "string",
+      "description": "Тип рахунку отримувача",
+      "enum": ["PERSONAL", "BUSINESS"],
+      "examples": ["PERSONAL", "BUSINESS"]
+    },
+    "paymentType": {
+      "type": "string",
+      "description": "Тип платежу",
+      "enum": ["INSTANT", "REGULAR"],
+      "examples": ["INSTANT", "REGULAR"]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "requestId": "550e8400-e29b-41d4-a716-446655440000",
+      "timestamp": "2026-02-06T14:30:00Z",
+      "requester": {
+        "bic": "NBUBUBU1XXX",
+        "nbuId": "300001"
+      },
+      "payee": {
+        "iban": "UA213223130000026007233566001",
+        "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
+        "identificationType": "INN",
+        "identificationCode": "1234567890"
+      },
+      "accountType": "PERSONAL",
+      "paymentType": "INSTANT"
+    },
+    {
+      "requestId": "7b3d8f90-c1e2-4567-89ab-cdef01234567",
+      "timestamp": "2026-02-06T15:00:00Z",
+      "requester": {
+        "bic": "PBANUA2XXXX",
+        "nbuId": "300023"
+      },
+      "payee": {
+        "iban": "UA903052990000026009011702860",
+        "name": "ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ \"МОНОБАНК\"",
+        "identificationType": "EDRPOU",
+        "identificationCode": "14360570"
+      },
+      "accountType": "BUSINESS",
+      "paymentType": "REGULAR"
+    }
+  ]
+}

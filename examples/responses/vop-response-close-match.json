@@ -1,0 +1,17 @@
+{
+  "requestId": "550e8400-e29b-41d4-a716-446655440000",
+  "timestamp": "2026-02-06T14:30:01Z",
+  "responder": {
+    "bic": "PRYBUA2XXXX",
+    "nbuId": "300023"
+  },
+  "result": {
+    "matchStatus": "CLOSE_MATCH",
+    "matchScore": 87,
+    "reasonCode": "MBAM",
+    "reasonDescription": "May be a match - minor spelling difference detected",
+    "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ",
+    "accountStatus": "ACTIVE"
+  },
+  "processingTime": 920
+}

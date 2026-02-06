@@ -1,0 +1,16 @@
+{
+  "requestId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "timestamp": "2026-02-06T16:45:30.123Z",
+  "requester": {
+    "bic": "PRYBUA2XXXX",
+    "nbuId": "300023"
+  },
+  "payee": {
+    "iban": "UA213052990000026009011702860",
+    "name": "КОВАЛЕНКО ОЛЕНА ПЕТРІВНА",
+    "identificationType": "INN",
+    "identificationCode": "9876543210"
+  },
+  "accountType": "PERSONAL",
+  "paymentType": "INSTANT"
+}

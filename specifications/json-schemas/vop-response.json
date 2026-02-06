@@ -1,0 +1,210 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sep.nbu.gov.ua/schemas/vop-response.json",
+  "title": "VoP Response Schema",
+  "description": "JSON Schema для VoP Response (Verification of Payee) в СЕП НБУ",
+  "type": "object",
+  "required": ["requestId", "timestamp", "result", "processingTime"],
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Ідентифікатор запиту (echo з request)",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "examples": ["550e8400-e29b-41d4-a716-446655440000"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Час відповіді (ISO 8601 format)",
+      "examples": ["2026-02-06T14:30:01Z", "2026-02-06T14:30:01.500Z"]
+    },
+    "responder": {
+      "type": "object",
+      "description": "Інформація про банк-отримувач",
+      "required": ["bic", "nbuId"],
+      "properties": {
+        "bic": {
+          "type": "string",
+          "description": "Bank Identifier Code (ISO 9362)",
+          "pattern": "^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$",
+          "minLength": 8,
+          "maxLength": 11,
+          "examples": ["PRYBUA2XXXX", "PBANUA2X"]
+        },
+        "nbuId": {
+          "type": "string",
+          "description": "Ідентифікатор учасника СЕП НБУ (6 цифр)",
+          "pattern": "^\\d{6}$",
+          "examples": ["300023", "300001"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "description": "Результат перевірки",
+      "required": ["matchStatus", "reasonCode"],
+      "properties": {
+        "matchStatus": {
+          "type": "string",
+          "description": "Статус співпадіння імені та IBAN",
+          "enum": ["MATCH", "NO_MATCH", "CLOSE_MATCH", "NOT_SUPPORTED", "ERROR"],
+          "examples": ["MATCH", "CLOSE_MATCH", "NO_MATCH"]
+        },
+        "matchScore": {
+          "type": "number",
+          "description": "Ступінь співпадіння (0-100%)",
+          "minimum": 0,
+          "maximum": 100,
+          "examples": [100, 87.5, 45.2]
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "Код причини результату",
+          "enum": ["ANNM", "MBAM", "ACNS", "OPTO", "BANM", "PAMM", "TCHA", "UNKN"],
+          "examples": ["ANNM", "MBAM", "TCHA"]
+        },
+        "reasonDescription": {
+          "type": "string",
+          "description": "Опис причини результату",
+          "minLength": 1,
+          "maxLength": 255,
+          "examples": [
+            "Account name match",
+            "May be a match",
+            "Account name no match",
+            "Technical error"
+          ]
+        },
+        "verifiedName": {
+          "type": "string",
+          "description": "Перевірене ім'я з БД банку-отримувача (опційно)",
+          "minLength": 1,
+          "maxLength": 140,
+          "examples": [
+            "ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ",
+            "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ"
+          ]
+        },
+        "accountStatus": {
+          "type": "string",
+          "description": "Статус рахунку отримувача (опційно)",
+          "enum": ["ACTIVE", "CLOSED", "BLOCKED"],
+          "examples": ["ACTIVE", "CLOSED"]
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "matchStatus": {
+                "const": "MATCH"
+              }
+            }
+          },
+          "then": {
+            "required": ["matchScore", "verifiedName"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "matchStatus": {
+                "const": "CLOSE_MATCH"
+              }
+            }
+          },
+          "then": {
+            "required": ["matchScore", "verifiedName"]
+          }
+        }
+      ]
+    },
+    "processingTime": {
+      "type": "integer",
+      "description": "Час обробки запиту (мілісекунди)",
+      "minimum": 0,
+      "maximum": 10000,
+      "examples": [850, 1200, 3000]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "requestId": "550e8400-e29b-41d4-a716-446655440000",
+      "timestamp": "2026-02-06T14:30:01Z",
+      "responder": {
+        "bic": "PRYBUA2XXXX",
+        "nbuId": "300023"
+      },
+      "result": {
+        "matchStatus": "MATCH",
+        "matchScore": 100,
+        "reasonCode": "ANNM",
+        "reasonDescription": "Account name match",
+        "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ",
+        "accountStatus": "ACTIVE"
+      },
+      "processingTime": 850
+    },
+    {
+      "requestId": "550e8400-e29b-41d4-a716-446655440000",
+      "timestamp": "2026-02-06T14:30:01Z",
+      "responder": {
+        "bic": "PRYBUA2XXXX",
+        "nbuId": "300023"
+      },
+      "result": {
+        "matchStatus": "CLOSE_MATCH",
+        "matchScore": 87,
+        "reasonCode": "MBAM",
+        "reasonDescription": "May be a match",
+        "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ",
+        "accountStatus": "ACTIVE"
+      },
+      "processingTime": 920
+    },
+    {
+      "requestId": "550e8400-e29b-41d4-a716-446655440000",
+      "timestamp": "2026-02-06T14:30:01Z",
+      "responder": {
+        "bic": "PRYBUA2XXXX",
+        "nbuId": "300023"
+      },
+      "result": {
+        "matchStatus": "NO_MATCH",
+        "matchScore": 45,
+        "reasonCode": "ANNM",
+        "reasonDescription": "Account name no match",
+        "accountStatus": "ACTIVE"
+      },
+      "processingTime": 780
+    },
+    {
+      "requestId": "550e8400-e29b-41d4-a716-446655440000",
+      "timestamp": "2026-02-06T14:30:01Z",
+      "responder": {
+        "bic": "PRYBUA2XXXX",
+        "nbuId": "300023"
+      },
+      "result": {
+        "matchStatus": "NOT_SUPPORTED",
+        "reasonCode": "OPTO",
+        "reasonDescription": "Client opted out from VoP"
+      },
+      "processingTime": 150
+    },
+    {
+      "requestId": "550e8400-e29b-41d4-a716-446655440000",
+      "timestamp": "2026-02-06T14:30:03Z",
+      "result": {
+        "matchStatus": "ERROR",
+        "reasonCode": "TCHA",
+        "reasonDescription": "Technical error at responder bank"
+      },
+      "processingTime": 3000
+    }
+  ]
+}

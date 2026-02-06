@@ -1,0 +1,10 @@
+{
+  "requestId": "550e8400-e29b-41d4-a716-446655440000",
+  "timestamp": "2026-02-06T14:30:03Z",
+  "result": {
+    "matchStatus": "ERROR",
+    "reasonCode": "TCHA",
+    "reasonDescription": "Technical error - database timeout"
+  },
+  "processingTime": 3000
+}

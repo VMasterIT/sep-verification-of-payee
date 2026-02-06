@@ -1,0 +1,617 @@
+openapi: 3.0.3
+info:
+  title: VoP Router API для СЕП НБУ
+  description: |
+    API для маршрутизації запитів Verification of Payee між банками-учасниками СЕП НБУ.
+
+    VoP Router виконує:
+    - Визначення банку-отримувача за IBAN
+    - Маршрутизацію запитів до відповідного банку
+    - Агрегацію відповідей
+    - Моніторинг та логування
+
+    Базується на міжнародному досвіді UK CoP та EU VoP.
+  version: 1.0.0
+  contact:
+    name: Національний банк України - Департамент платіжних систем
+    url: https://bank.gov.ua
+    email: sep@bank.gov.ua
+  license:
+    name: Proprietary
+    url: https://bank.gov.ua/terms
+
+servers:
+  - url: https://vop-router.sep.nbu.gov.ua/api
+    description: Production Environment
+  - url: https://vop-router-test.sep.nbu.gov.ua/api
+    description: Test Environment
+  - url: https://vop-router-sandbox.sep.nbu.gov.ua/api
+    description: Sandbox Environment
+
+security:
+  - BearerAuth: []
+  - mTLS: []
+
+tags:
+  - name: VoP Verification
+    description: Endpoints для перевірки реквізитів отримувача
+  - name: Health & Monitoring
+    description: Health checks та моніторинг
+
+paths:
+  /vop/v1/verify:
+    post:
+      tags:
+        - VoP Verification
+      summary: Перевірка реквізитів отримувача
+      description: |
+        Основний endpoint для перевірки співпадіння реквізитів отримувача (IBAN + ім'я).
+
+        **Процес:**
+        1. Router визначає банк-отримувач за IBAN (символи 5-10)
+        2. Router виконує lookup в Directory Service
+        3. Router направляє запит до банку-отримувача
+        4. Банк-отримувач перевіряє дані та виконує name matching
+        5. Router повертає результат банку-відправнику
+
+        **Performance:**
+        - Target: < 800 ms
+        - Maximum: 3000 ms (з timeout)
+        - Timeout: 3 секунди
+      operationId: verifyPayee
+      parameters:
+        - name: X-Request-ID
+          in: header
+          description: Унікальний ідентифікатор запиту (опційно, якщо не вказаний, буде використано requestId з body)
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Ключ для ідемпотентності запиту (для повторних спроб)
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoPRequest'
+            examples:
+              personalInstant:
+                summary: Особистий рахунок (миттєвий переказ)
+                value:
+                  requestId: 550e8400-e29b-41d4-a716-446655440000
+                  timestamp: "2026-02-06T14:30:00Z"
+                  requester:
+                    bic: NBUBUBU1XXX
+                    nbuId: "300001"
+                  payee:
+                    iban: UA213223130000026007233566001
+                    name: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
+                    identificationType: INN
+                    identificationCode: "1234567890"
+                  accountType: PERSONAL
+                  paymentType: INSTANT
+              businessRegular:
+                summary: Бізнес-рахунок (звичайний переказ)
+                value:
+                  requestId: 7b3d8f90-c1e2-4567-89ab-cdef01234567
+                  timestamp: "2026-02-06T15:00:00Z"
+                  requester:
+                    bic: PBANUA2XXXX
+                    nbuId: "300023"
+                  payee:
+                    iban: UA903052990000026009011702860
+                    name: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "МОНОБАНК"
+                    identificationType: EDRPOU
+                    identificationCode: "14360570"
+                  accountType: BUSINESS
+                  paymentType: REGULAR
+      responses:
+        '200':
+          description: Успішна перевірка (для всіх matchStatus включно з NO_MATCH)
+          headers:
+            X-Request-ID:
+              description: Ідентифікатор запиту (echo)
+              schema:
+                type: string
+                format: uuid
+            X-Response-Time:
+              description: Час обробки запиту (мс)
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoPResponse'
+              examples:
+                match:
+                  summary: Повне співпадіння (MATCH)
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    timestamp: "2026-02-06T14:30:01Z"
+                    responder:
+                      bic: PRYBUA2XXXX
+                      nbuId: "300023"
+                    result:
+                      matchStatus: MATCH
+                      matchScore: 100
+                      reasonCode: ANNM
+                      reasonDescription: Account name match
+                      verifiedName: ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ
+                      accountStatus: ACTIVE
+                    processingTime: 850
+                closeMatch:
+                  summary: Часткове співпадіння (CLOSE_MATCH)
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    timestamp: "2026-02-06T14:30:01Z"
+                    responder:
+                      bic: PRYBUA2XXXX
+                      nbuId: "300023"
+                    result:
+                      matchStatus: CLOSE_MATCH
+                      matchScore: 87
+                      reasonCode: MBAM
+                      reasonDescription: May be a match
+                      verifiedName: ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ
+                      accountStatus: ACTIVE
+                    processingTime: 920
+                noMatch:
+                  summary: Не співпадає (NO_MATCH)
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    timestamp: "2026-02-06T14:30:01Z"
+                    responder:
+                      bic: PRYBUA2XXXX
+                      nbuId: "300023"
+                    result:
+                      matchStatus: NO_MATCH
+                      matchScore: 45
+                      reasonCode: ANNM
+                      reasonDescription: Account name no match
+                      accountStatus: ACTIVE
+                    processingTime: 780
+                notSupported:
+                  summary: Не підтримується (NOT_SUPPORTED)
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    timestamp: "2026-02-06T14:30:01Z"
+                    responder:
+                      bic: PRYBUA2XXXX
+                      nbuId: "300023"
+                    result:
+                      matchStatus: NOT_SUPPORTED
+                      reasonCode: OPTO
+                      reasonDescription: Client opted out from VoP
+                    processingTime: 150
+                error:
+                  summary: Помилка (ERROR)
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    timestamp: "2026-02-06T14:30:01Z"
+                    result:
+                      matchStatus: ERROR
+                      reasonCode: TCHA
+                      reasonDescription: Technical error at responder bank
+                    processingTime: 3000
+        '400':
+          description: Невалідний запит
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalidIBAN:
+                  summary: Невалідний IBAN
+                  value:
+                    requestId: 550e8400-e29b-41d4-a716-446655440000
+                    timestamp: "2026-02-06T14:30:00Z"
+                    error:
+                      code: INVALID_IBAN
+                      message: Invalid IBAN format or checksum
+                      details: "IBAN checksum validation failed for: UA213223130000026007233566001"
+                      retryable: false
+        '401':
+          description: Невалідна автентифікація
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: UNAUTHORIZED
+                  message: Invalid or expired access token
+                  retryable: false
+        '403':
+          description: Недостатньо прав доступу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: FORBIDDEN
+                  message: Insufficient permissions for VoP verification
+                  retryable: false
+        '404':
+          description: Банк-отримувач не знайдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                requestId: 550e8400-e29b-41d4-a716-446655440000
+                timestamp: "2026-02-06T14:30:00Z"
+                error:
+                  code: BANK_NOT_FOUND
+                  message: Responder bank not found in directory
+                  details: "Bank code 322313 is not registered in VoP Directory"
+                  retryable: false
+        '429':
+          description: Перевищено ліміт запитів
+          headers:
+            Retry-After:
+              description: Кількість секунд до наступної спроби
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: RATE_LIMIT_EXCEEDED
+                  message: Too many requests
+                  details: "Rate limit: 100 requests/second per bank"
+                  retryable: true
+        '500':
+          description: Внутрішня помилка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                requestId: 550e8400-e29b-41d4-a716-446655440000
+                timestamp: "2026-02-06T14:30:01Z"
+                error:
+                  code: TECHNICAL_ERROR
+                  message: Internal server error
+                  retryable: true
+        '503':
+          description: Сервіс недоступний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: SERVICE_UNAVAILABLE
+                  message: Service temporarily unavailable
+                  details: "Database maintenance in progress"
+                  retryable: true
+        '504':
+          description: Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                requestId: 550e8400-e29b-41d4-a716-446655440000
+                timestamp: "2026-02-06T14:30:03Z"
+                error:
+                  code: TIMEOUT
+                  message: Request timeout
+                  details: "Responder bank did not respond within 3 seconds"
+                  retryable: true
+
+  /health:
+    get:
+      tags:
+        - Health & Monitoring
+      summary: Health check
+      description: Перевірка стану сервісу
+      operationId: healthCheck
+      security: []
+      responses:
+        '200':
+          description: Сервіс працює
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [healthy, degraded, unhealthy]
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                  components:
+                    type: object
+                    properties:
+                      database:
+                        type: string
+                        enum: [up, down]
+                      cache:
+                        type: string
+                        enum: [up, down]
+                      directory:
+                        type: string
+                        enum: [up, down]
+              example:
+                status: healthy
+                timestamp: "2026-02-06T14:30:00Z"
+                version: "1.0.0"
+                components:
+                  database: up
+                  cache: up
+                  directory: up
+
+  /metrics:
+    get:
+      tags:
+        - Health & Monitoring
+      summary: Prometheus metrics
+      description: Metrics в форматі Prometheus
+      operationId: getMetrics
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Metrics
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: |
+                # HELP vop_requests_total Total number of VoP requests
+                # TYPE vop_requests_total counter
+                vop_requests_total{status="MATCH"} 12345
+                vop_requests_total{status="NO_MATCH"} 234
+                vop_requests_total{status="CLOSE_MATCH"} 567
+
+                # HELP vop_requests_duration_seconds VoP request duration
+                # TYPE vop_requests_duration_seconds histogram
+                vop_requests_duration_seconds_bucket{le="0.5"} 8900
+                vop_requests_duration_seconds_bucket{le="1.0"} 11200
+                vop_requests_duration_seconds_bucket{le="3.0"} 12340
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        OAuth 2.0 Bearer Token (JWT).
+
+        Отримання токену:
+        ```
+        POST /oauth/token
+        Content-Type: application/x-www-form-urlencoded
+
+        grant_type=client_credentials&
+        client_id={your_client_id}&
+        client_secret={your_client_secret}&
+        scope=vop:request
+        ```
+
+    mTLS:
+      type: mutualTLS
+      description: |
+        Mutual TLS (mTLS) автентифікація з використанням QWAC сертифікатів.
+
+        Вимоги:
+        - Сертифікат видано НБУ або акредитованим CA
+        - Сертифікат валідний (не expired, не revoked)
+        - Subject DN містить NBU ID банку
+
+  schemas:
+    VoPRequest:
+      type: object
+      required:
+        - requestId
+        - timestamp
+        - requester
+        - payee
+      properties:
+        requestId:
+          type: string
+          format: uuid
+          description: Унікальний ідентифікатор запиту (UUID v4)
+          example: 550e8400-e29b-41d4-a716-446655440000
+        timestamp:
+          type: string
+          format: date-time
+          description: Час створення запиту (ISO 8601)
+          example: "2026-02-06T14:30:00Z"
+        requester:
+          $ref: '#/components/schemas/BankInfo'
+        payee:
+          $ref: '#/components/schemas/PayeeInfo'
+        accountType:
+          type: string
+          enum: [PERSONAL, BUSINESS]
+          description: Тип рахунку отримувача
+          example: PERSONAL
+        paymentType:
+          type: string
+          enum: [INSTANT, REGULAR]
+          description: Тип платежу (миттєвий або звичайний)
+          example: INSTANT
+
+    VoPResponse:
+      type: object
+      required:
+        - requestId
+        - timestamp
+        - result
+        - processingTime
+      properties:
+        requestId:
+          type: string
+          format: uuid
+          description: Ідентифікатор запиту (echo)
+          example: 550e8400-e29b-41d4-a716-446655440000
+        timestamp:
+          type: string
+          format: date-time
+          description: Час відповіді (ISO 8601)
+          example: "2026-02-06T14:30:01Z"
+        responder:
+          $ref: '#/components/schemas/BankInfo'
+        result:
+          $ref: '#/components/schemas/VerificationResult'
+        processingTime:
+          type: integer
+          description: Час обробки запиту (мілісекунди)
+          example: 850
+          minimum: 0
+
+    BankInfo:
+      type: object
+      required:
+        - bic
+        - nbuId
+      properties:
+        bic:
+          type: string
+          pattern: '^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$'
+          description: Bank Identifier Code (ISO 9362, 11 символів)
+          example: PRYBUA2XXXX
+        nbuId:
+          type: string
+          pattern: '^\d{6}$'
+          description: Ідентифікатор учасника СЕП НБУ (6 цифр)
+          example: "300023"
+
+    PayeeInfo:
+      type: object
+      required:
+        - iban
+        - name
+      properties:
+        iban:
+          type: string
+          pattern: '^UA\d{27}$'
+          description: IBAN отримувача (29 символів, UA + 27 цифр)
+          example: UA213223130000026007233566001
+        name:
+          type: string
+          minLength: 1
+          maxLength: 140
+          description: Ім'я отримувача (ПІБ або назва компанії)
+          example: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
+        identificationType:
+          type: string
+          enum: [EDRPOU, PASSPORT, INN]
+          description: |
+            Тип ідентифікаційного коду:
+            - EDRPOU - Код ЄДРПОУ (для юридичних осіб)
+            - INN - Індивідуальний податковий номер (для фізичних осіб)
+            - PASSPORT - Паспорт (якщо немає ІПН)
+          example: INN
+        identificationCode:
+          type: string
+          minLength: 8
+          maxLength: 20
+          description: Ідентифікаційний код (ЄДРПОУ, ІПН, або номер паспорта)
+          example: "1234567890"
+
+    VerificationResult:
+      type: object
+      required:
+        - matchStatus
+        - reasonCode
+      properties:
+        matchStatus:
+          type: string
+          enum: [MATCH, NO_MATCH, CLOSE_MATCH, NOT_SUPPORTED, ERROR]
+          description: |
+            Статус співпадіння:
+            - MATCH - Повне співпадіння (similarity ≥ 95%)
+            - CLOSE_MATCH - Часткове співпадіння (75% ≤ similarity < 95%)
+            - NO_MATCH - Не співпадає (similarity < 75%)
+            - NOT_SUPPORTED - Перевірка не підтримується (opt-out, тощо)
+            - ERROR - Технічна помилка
+          example: MATCH
+        matchScore:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+          description: Ступінь співпадіння (0-100%)
+          example: 100
+        reasonCode:
+          type: string
+          enum: [ANNM, MBAM, ACNS, OPTO, BANM, PAMM, TCHA, UNKN]
+          description: |
+            Код причини:
+            - ANNM - Account Name No Match / Match
+            - MBAM - May Be A Match
+            - ACNS - Account Not Supported
+            - OPTO - Opted Out
+            - BANM - Business Account Name Match
+            - PAMM - Personal Account May Match
+            - TCHA - Technical Error
+            - UNKN - Unknown Error
+          example: ANNM
+        reasonDescription:
+          type: string
+          description: Опис причини
+          example: Account name match
+        verifiedName:
+          type: string
+          description: Перевірене ім'я з БД банку-отримувача (якщо доступно)
+          example: ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ
+        accountStatus:
+          type: string
+          enum: [ACTIVE, CLOSED, BLOCKED]
+          description: |
+            Статус рахунку:
+            - ACTIVE - Активний
+            - CLOSED - Закритий
+            - BLOCKED - Заблокований
+          example: ACTIVE
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        requestId:
+          type: string
+          format: uuid
+          description: Ідентифікатор запиту (якщо доступний)
+        timestamp:
+          type: string
+          format: date-time
+          description: Час помилки
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              description: Код помилки
+              example: INVALID_IBAN
+            message:
+              type: string
+              description: Повідомлення про помилку
+              example: Invalid IBAN format or checksum
+            details:
+              type: string
+              description: Детальний опис помилки
+              example: "IBAN checksum validation failed"
+            retryable:
+              type: boolean
+              description: Чи можна повторити запит
+              example: false
+
