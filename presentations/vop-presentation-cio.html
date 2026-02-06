@@ -284,22 +284,36 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
-            flex: 0 0 80px;
+            justify-content: center;
+            gap: 8px;
+            flex: 0 0 140px;
         }
 
-        .arch-arrow-right {
-            color: #2a5298;
-            font-size: 2em;
+        .arch-arrow-forward {
+            color: #27ae60;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .arch-arrow-backward {
+            color: #e67e22;
+            font-size: 1.8em;
             font-weight: bold;
         }
 
         .arch-arrow-label {
-            font-size: 0.85em;
-            color: #2a5298;
+            font-size: 0.8em;
             font-weight: 600;
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.3;
+        }
+
+        .arch-arrow-label.forward {
+            color: #27ae60;
+        }
+
+        .arch-arrow-label.backward {
+            color: #e67e22;
         }
 
         .arch-bottom {
@@ -641,7 +655,7 @@
                 <h2>Архітектура системи</h2>
 
                 <div class="architecture-diagram">
-                    <!-- Main Flow -->
+                    <!-- Main Flow with bidirectional arrows -->
                     <div class="arch-flow">
                         <div class="arch-component">
                             <h4>Банк-відправник</h4>
@@ -649,8 +663,10 @@
                         </div>
 
                         <div class="arch-arrow">
-                            <div class="arch-arrow-right">→</div>
-                            <div class="arch-arrow-label">VoP<br>Request</div>
+                            <div class="arch-arrow-forward">→</div>
+                            <div class="arch-arrow-label forward">VoP Request</div>
+                            <div class="arch-arrow-backward">←</div>
+                            <div class="arch-arrow-label backward">VoP Response</div>
                         </div>
 
                         <div class="arch-component" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
@@ -659,38 +675,15 @@
                         </div>
 
                         <div class="arch-arrow">
-                            <div class="arch-arrow-right">→</div>
-                            <div class="arch-arrow-label">VoP<br>Request</div>
+                            <div class="arch-arrow-forward">→</div>
+                            <div class="arch-arrow-label forward">VoP Request</div>
+                            <div class="arch-arrow-backward">←</div>
+                            <div class="arch-arrow-label backward">VoP Response</div>
                         </div>
 
                         <div class="arch-component">
                             <h4>Банк-отримувач</h4>
                             <p>(Responder API)</p>
-                        </div>
-                    </div>
-
-                    <!-- Return Flow -->
-                    <div class="arch-flow">
-                        <div class="arch-component" style="opacity: 0.7;">
-                            <p style="font-size: 0.9em;">↓ Response ↓</p>
-                        </div>
-
-                        <div class="arch-arrow">
-                            <div class="arch-arrow-right" style="transform: rotate(180deg);">→</div>
-                            <div class="arch-arrow-label">VoP<br>Response</div>
-                        </div>
-
-                        <div class="arch-component" style="background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%); opacity: 0.7;">
-                            <p style="font-size: 0.9em;">Маршрутизація відповіді</p>
-                        </div>
-
-                        <div class="arch-arrow">
-                            <div class="arch-arrow-right" style="transform: rotate(180deg);">→</div>
-                            <div class="arch-arrow-label">VoP<br>Response</div>
-                        </div>
-
-                        <div class="arch-component" style="opacity: 0.7;">
-                            <p style="font-size: 0.9em;">↓ Response ↓</p>
                         </div>
                     </div>
 
