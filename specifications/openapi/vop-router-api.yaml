@@ -13,9 +13,9 @@ info:
     Базується на міжнародному досвіді UK CoP та EU VoP.
   version: 1.0.0
   contact:
-    name: Національний банк України - Департамент платіжних систем
+    name: Національний банк України - Департамент інформаційних технологій
     url: https://bank.gov.ua
-    email: sep@bank.gov.ua
+    email: iso20022@bank.gov.ua
   license:
     name: Proprietary
     url: https://bank.gov.ua/terms
