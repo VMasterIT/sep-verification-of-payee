@@ -70,12 +70,12 @@
         "identificationType": {
           "type": "string",
           "description": "Тип ідентифікаційного коду",
-          "enum": ["EDRPOU", "PASSPORT", "INN"],
-          "examples": ["INN", "EDRPOU"]
+          "enum": ["EDRPOU", "PASSPORT", "RNOKPP"],
+          "examples": ["RNOKPP", "EDRPOU"]
         },
         "identificationCode": {
           "type": "string",
-          "description": "Ідентифікаційний код (ЄДРПОУ, ІПН, або номер паспорта)",
+          "description": "Ідентифікаційний код (ЄДРПОУ, РНОКПП, або номер паспорта)",
           "minLength": 8,
           "maxLength": 20,
           "examples": ["1234567890", "14360570", "АА123456"]
@@ -112,7 +112,7 @@
       "payee": {
         "iban": "UA213223130000026007233566001",
         "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
-        "identificationType": "INN",
+        "identificationType": "RNOKPP",
         "identificationCode": "1234567890"
       },
       "accountType": "PERSONAL",
@@ -143,7 +143,7 @@
       "payee": {
         "iban": "UA593052990000026004013702222",
         "name": "ІВАНЕНКО ОЛЕНА ПЕТРІВНА",
-        "identificationType": "INN",
+        "identificationType": "RNOKPP",
         "identificationCode": "9876543210"
       },
       "accountType": "PERSONAL",

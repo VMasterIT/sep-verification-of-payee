@@ -84,7 +84,7 @@ Content-Type: application/json
   "payee": {
     "iban": "UA903052990000026001234567890",
     "name": "PETRANKO OLENA IVANIVNA",
-    "identificationType": "INN",
+    "identificationType": "RNOKPP",
     "identificationCode": "2345678901"
   },
   "accountType": "PERSONAL",
@@ -122,7 +122,7 @@ X-Request-ID: a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
   "payee": {
     "iban": "UA903052990000026001234567890",
     "name": "PETRANKO OLENA IVANIVNA",
-    "identificationType": "INN",
+    "identificationType": "RNOKPP",
     "identificationCode": "2345678901"
   },
   "accountType": "PERSONAL",
@@ -156,7 +156,7 @@ WHERE a.iban = 'UA903052990000026001234567890';
 ```
 client_id: 789012
 full_name: ПЕТРЕНКО ОЛЕНА ІВАНІВНА  ← Правильне ім'я в БД
-identification_type: INN
+identification_type: RNOKPP
 identification_code: 2345678901
 iban: UA903052990000026001234567890
 account_status: ACTIVE

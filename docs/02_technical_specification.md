@@ -491,8 +491,8 @@ interface VoPRequest {
   payee: {
     iban: string;              // 29 chars (UA + 27)
     name: string;              // Max 140 chars
-    identificationType: 'EDRPOU' | 'PASSPORT' | 'INN';
-    identificationCode: string;  // 10 digits (EDRPOU/INN) або passport
+    identificationType: 'EDRPOU' | 'PASSPORT' | 'RNOKPP';
+    identificationCode: string;  // 10 digits (EDRPOU/RNOKPP) або passport
   };
   accountType: 'PERSONAL' | 'BUSINESS';
   paymentType: 'INSTANT' | 'REGULAR';
@@ -550,7 +550,7 @@ interface VoPRequest {
         },
         "identificationType": {
           "type": "string",
-          "enum": ["EDRPOU", "PASSPORT", "INN"]
+          "enum": ["EDRPOU", "PASSPORT", "RNOKPP"]
         },
         "identificationCode": {
           "type": "string",

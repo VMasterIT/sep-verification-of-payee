@@ -8,7 +8,7 @@
   "payee": {
     "iban": "UA213052990000026009011702860",
     "name": "КОВАЛЕНКО ОЛЕНА ПЕТРІВНА",
-    "identificationType": "INN",
+    "identificationType": "RNOKPP",
     "identificationCode": "9876543210"
   },
   "accountType": "PERSONAL",

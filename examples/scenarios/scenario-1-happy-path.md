@@ -62,7 +62,7 @@ Content-Type: application/json
 {
   "recipientName": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
   "recipientIban": "UA213223130000026007233566001",
-  "recipientIdType": "INN",
+  "recipientIdType": "RNOKPP",
   "recipientIdCode": "1234567890",
   "accountType": "PERSONAL",
   "paymentType": "INSTANT"
@@ -86,7 +86,7 @@ Backend NBU Bank (VoP Requester) формує VoP Request для відправ�
   "payee": {
     "iban": "UA213223130000026007233566001",
     "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
-    "identificationType": "INN",
+    "identificationType": "RNOKPP",
     "identificationCode": "1234567890"
   },
   "accountType": "PERSONAL",
@@ -186,7 +186,7 @@ X-Client-Certificate: [Router's mTLS certificate]
   "payee": {
     "iban": "UA213223130000026007233566001",
     "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
-    "identificationType": "INN",
+    "identificationType": "RNOKPP",
     "identificationCode": "1234567890"
   },
   "accountType": "PERSONAL",
@@ -230,7 +230,7 @@ WHERE a.iban = 'UA213223130000026007233566001';
 ```
 client_id: 123456
 full_name: ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ
-identification_type: INN
+identification_type: RNOKPP
 identification_code: 1234567890
 iban: UA213223130000026007233566001
 account_status: ACTIVE

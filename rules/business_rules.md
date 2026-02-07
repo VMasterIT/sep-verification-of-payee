@@ -298,7 +298,7 @@ IBAN: UA213223130000026007233566001
 
 **Правило:** Для `accountType = PERSONAL`:
 
-- **identificationType:** `INN` або `PASSPORT`
+- **identificationType:** `RNOKPP` або `PASSPORT`
 - **Name format:** ПРІЗВИЩЕ ІМ'Я ПО-БАТЬКОВІ
 - **Opt-out:** Дозволено
 
@@ -308,7 +308,7 @@ IBAN: UA213223130000026007233566001
   "accountType": "PERSONAL",
   "payee": {
     "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
-    "identificationType": "INN",
+    "identificationType": "RNOKPP",
     "identificationCode": "1234567890"
   }
 }
@@ -516,7 +516,7 @@ Hash:     SHA256:5d41402abc4b2a76b9719d911017c592
 **Передається:**
 - ✅ IBAN
 - ✅ Ім'я/назва
-- ✅ Ідентифікаційний код (ЄДРПОУ/ІПН)
+- ✅ Ідентифікаційний код (ЄДРПОУ/РНОКПП)
 
 **НЕ передається:**
 - ❌ Номер телефону

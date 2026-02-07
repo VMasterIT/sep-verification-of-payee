@@ -74,7 +74,7 @@ paths:
                 value:
                   recipientName: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
                   recipientIban: UA213223130000026007233566001
-                  recipientIdType: INN
+                  recipientIdType: RNOKPP
                   recipientIdCode: "1234567890"
                   accountType: PERSONAL
                   paymentType: INSTANT
@@ -364,9 +364,9 @@ components:
           example: UA213223130000026007233566001
         recipientIdType:
           type: string
-          enum: [EDRPOU, INN, PASSPORT]
+          enum: [EDRPOU, RNOKPP, PASSPORT]
           description: Тип ідентифікаційного коду
-          example: INN
+          example: RNOKPP
         recipientIdCode:
           type: string
           minLength: 8

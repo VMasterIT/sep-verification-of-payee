@@ -388,16 +388,16 @@ def validate_edrpou(code):
     return {'valid': True}
 ```
 
-### 4.2 ІПН (Індивідуальний податковий номер)
+### 4.2 РНОКПП (Індивідуальний податковий номер)
 
-**VR-INN-01: Формат**
+**VR-RNOKPP-01: Формат**
 ```
 Довжина: 10 цифр
 Regex: ^\d{10}$
 Приклад: 1234567890
 ```
 
-**VR-INN-02: Структура**
+**VR-RNOKPP-02: Структура**
 ```
 Формат: DDMMYYSSSSC
 DD - день народження (01-31)
@@ -407,7 +407,7 @@ SSSS - порядковий номер
 C - контрольна цифра
 ```
 
-**VR-INN-03: Валідація дати**
+**VR-RNOKPP-03: Валідація дати**
 ```
 Вимога: Дата народження має бути реалістичною
 - День: 01-31
@@ -419,13 +419,13 @@ C - контрольна цифра
 ```python
 def validate_inn(code):
     """
-    Валідація ІПН
+    Валідація РНОКПП
     """
     # 1. Формат
     if not re.match(r'^\d{10}$', code):
         return {
             'valid': False,
-            'error': 'INN must be 10 digits'
+            'error': 'RNOKPP must be 10 digits'
         }
 
     # 2. Валідація дати
@@ -436,13 +436,13 @@ def validate_inn(code):
     if day < 1 or day > 31:
         return {
             'valid': False,
-            'error': f'Invalid day in INN: {day}'
+            'error': f'Invalid day in RNOKPP: {day}'
         }
 
     if month < 1 or month > 12:
         return {
             'valid': False,
-            'error': f'Invalid month in INN: {month}'
+            'error': f'Invalid month in RNOKPP: {month}'
         }
 
     # 3. Checksum (mod 11)
@@ -454,7 +454,7 @@ def validate_inn(code):
     if checksum != int(code[9]):
         return {
             'valid': False,
-            'error': 'Invalid INN checksum'
+            'error': 'Invalid RNOKPP checksum'
         }
 
     return {'valid': True}
@@ -838,7 +838,7 @@ def validate_cross_fields(request_data):
         result = validate_edrpou(id_code)
         if not result['valid']:
             return result
-    elif id_type == 'INN':
+    elif id_type == 'RNOKPP':
         result = validate_inn(id_code)
         if not result['valid']:
             return result
@@ -853,7 +853,7 @@ def validate_cross_fields(request_data):
 **VR-REQUEST-04: accountType відповідає identificationType**
 ```
 Правило:
-- accountType=PERSONAL → identificationType=INN або PASSPORT
+- accountType=PERSONAL → identificationType=RNOKPP або PASSPORT
 - accountType=BUSINESS → identificationType=EDRPOU
 ```
 
@@ -869,10 +869,10 @@ def validate_account_type_consistency(request_data):
     if not account_type or not id_type:
         return {'valid': True}  # Skip if not present
 
-    if account_type == 'PERSONAL' and id_type not in ['INN', 'PASSPORT']:
+    if account_type == 'PERSONAL' and id_type not in ['RNOKPP', 'PASSPORT']:
         return {
             'valid': False,
-            'error': f'PERSONAL account must have INN or PASSPORT, got {id_type}'
+            'error': f'PERSONAL account must have RNOKPP or PASSPORT, got {id_type}'
         }
 
     if account_type == 'BUSINESS' and id_type != 'EDRPOU':

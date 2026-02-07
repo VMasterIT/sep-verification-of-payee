@@ -7,7 +7,7 @@
   "payee": {
     "iban": "UA593052990000026004013702222",
     "name": "ІВАНЕНКО ОЛЕНА ПЕТРІВНА",
-    "identificationType": "INN",
+    "identificationType": "RNOKPP",
     "identificationCode": "9876543210"
   },
   "accountType": "PERSONAL",

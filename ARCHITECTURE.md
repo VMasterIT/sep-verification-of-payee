@@ -449,7 +449,7 @@ Authorization: Bearer {access_token}
   "payee": {
     "iban": "UA213223130000026007233566001",
     "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
-    "identificationType": "INN",
+    "identificationType": "RNOKPP",
     "identificationCode": "1234567890"
   },
   "accountType": "PERSONAL",

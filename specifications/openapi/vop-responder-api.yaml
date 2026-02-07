@@ -116,7 +116,7 @@ paths:
                   payee:
                     iban: UA213223130000026007233566001
                     name: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
-                    identificationType: INN
+                    identificationType: RNOKPP
                     identificationCode: "1234567890"
                   accountType: PERSONAL
                   paymentType: INSTANT
@@ -543,9 +543,9 @@ components:
           example: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
         identificationType:
           type: string
-          enum: [EDRPOU, PASSPORT, INN]
+          enum: [EDRPOU, PASSPORT, RNOKPP]
           description: Тип ідентифікаційного коду
-          example: INN
+          example: RNOKPP
         identificationCode:
           type: string
           minLength: 8
