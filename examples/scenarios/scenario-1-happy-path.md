@@ -229,7 +229,7 @@ WHERE a.iban = 'UA213223130000026007233566001';
 
 ```
 client_id: 123456
-full_name: ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ
+full_name: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
 identification_type: RNOKPP
 identification_code: 1234567890
 iban: UA213223130000026007233566001
@@ -243,17 +243,17 @@ vop_opted_out: FALSE
 
 ```python
 request_name = "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ"
-db_name = "ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ"
+db_name = "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ"
 
 # Нормалізація
 norm_request = normalize(request_name)  # "шевченко тарас григорович"
-norm_db = normalize(db_name)            # "шевченко тарас григорійович"
+norm_db = normalize(db_name)            # "шевченко тарас григорович"
 
-# Fuzzy matching
-lev_score = levenshtein_similarity(norm_request, norm_db)  # 92%
-jw_score = jaro_winkler_similarity(norm_request, norm_db)  # 95%
+# Exact match
+lev_score = levenshtein_similarity(norm_request, norm_db)  # 100%
+jw_score = jaro_winkler_similarity(norm_request, norm_db)  # 100%
 
-max_score = max(lev_score, jw_score)  # 95%
+max_score = max(lev_score, jw_score)  # 100%
 
 # Визначити статус
 if max_score >= 95:
@@ -283,7 +283,7 @@ if max_score >= 95:
     "matchScore": 95,
     "reasonCode": "ANNM",
     "reasonDescription": "Account name match",
-    "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ",
+    "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
     "accountStatus": "ACTIVE"
   },
   "processingTime": 800
@@ -332,7 +332,7 @@ X-Response-Time: 850
     "matchScore": 95,
     "reasonCode": "ANNM",
     "reasonDescription": "Account name match",
-    "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ",
+    "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
     "accountStatus": "ACTIVE"
   },
   "processingTime": 850

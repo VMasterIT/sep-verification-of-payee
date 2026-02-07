@@ -134,7 +134,7 @@ VoP дозволяє банкам-відправникам перевіряти 
     "matchStatus": "MATCH",
     "matchScore": 100,
     "reasonCode": "ANNM",
-    "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ",
+    "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
     "accountStatus": "ACTIVE"
   },
   "processingTime": 850
