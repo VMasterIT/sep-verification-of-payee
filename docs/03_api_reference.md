@@ -293,7 +293,7 @@ X-Request-ID: 550e8400-e29b-41d4-a716-446655440000
   "timestamp": "2026-02-06T14:30:01Z",
   "responder": {
     "bic": "PRYBUA2XXXX",
-    "nbuId": "300023"
+    "nbuId": "305299"
   },
   "result": {
     "matchStatus": "MATCH",
@@ -523,7 +523,7 @@ X-Request-ID: 550e8400-e29b-41d4-a716-446655440000
   "timestamp": "2026-02-06T14:30:01Z",
   "responder": {
     "bic": "PRYBUA2XXXX",
-    "nbuId": "300023"
+    "nbuId": "305299"
   },
   "result": {
     "matchStatus": "MATCH",
@@ -575,7 +575,7 @@ Authorization: Bearer {access_token}
   "total": 45,
   "items": [
     {
-      "nbuId": "300023",
+      "nbuId": "305299",
       "bic": "PRYBUA2XXXX",
       "name": "ПриватБанк",
       "status": "ACTIVE",
@@ -594,7 +594,7 @@ Authorization: Bearer {access_token}
 
 **Request:**
 ```http
-GET /directory/v1/participants/300023
+GET /directory/v1/participants/305299
 Host: vop-directory.sep.nbu.gov.ua
 Authorization: Bearer {access_token}
 ```
@@ -602,7 +602,7 @@ Authorization: Bearer {access_token}
 **Response (200 OK):**
 ```json
 {
-  "nbuId": "300023",
+  "nbuId": "305299",
   "bic": "PRYBUA2XXXX",
   "name": "ПриватБанк",
   "status": "ACTIVE",
@@ -633,7 +633,7 @@ Authorization: Bearer {access_token}
   "iban": "UA213223130000026007233566001",
   "bankCode": "322313",
   "participant": {
-    "nbuId": "300023",
+    "nbuId": "305299",
     "bic": "PRYBUA2XXXX",
     "name": "ПриватБанк",
     "vopResponderUrl": "https://vop.privatbank.ua/api/v1/verify",
@@ -809,7 +809,7 @@ curl -X POST https://vop-router.sep.nbu.gov.ua/api/vop/v1/verify \
   "timestamp": "2026-02-06T14:30:01Z",
   "responder": {
     "bic": "PRYBUA2XXXX",
-    "nbuId": "300023"
+    "nbuId": "305299"
   },
   "result": {
     "matchStatus": "MATCH",
@@ -855,7 +855,7 @@ curl -X POST https://vop-router.sep.nbu.gov.ua/api/vop/v1/verify \
   "timestamp": "2026-02-06T14:35:01Z",
   "responder": {
     "bic": "PRYBUA2XXXX",
-    "nbuId": "300023"
+    "nbuId": "305299"
   },
   "result": {
     "matchStatus": "CLOSE_MATCH",
@@ -901,7 +901,7 @@ curl -X POST https://vop-router.sep.nbu.gov.ua/api/vop/v1/verify \
   "timestamp": "2026-02-06T14:40:01Z",
   "responder": {
     "bic": "PRYBUA2XXXX",
-    "nbuId": "300023"
+    "nbuId": "305299"
   },
   "result": {
     "matchStatus": "NO_MATCH",

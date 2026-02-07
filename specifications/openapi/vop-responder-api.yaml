@@ -127,7 +127,7 @@ paths:
                   timestamp: "2026-02-06T15:00:00Z"
                   requester:
                     bic: PBANUA2XXXX
-                    nbuId: "300023"
+                    nbuId: "305299"
                   payee:
                     iban: UA903052990000026009011702860
                     name: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "МОНОБАНК"
@@ -160,7 +160,7 @@ paths:
                     timestamp: "2026-02-06T14:30:01Z"
                     responder:
                       bic: PRYBUA2XXXX
-                      nbuId: "300023"
+                      nbuId: "305299"
                     result:
                       matchStatus: MATCH
                       matchScore: 100
@@ -176,7 +176,7 @@ paths:
                     timestamp: "2026-02-06T14:30:01Z"
                     responder:
                       bic: PRYBUA2XXXX
-                      nbuId: "300023"
+                      nbuId: "305299"
                     result:
                       matchStatus: CLOSE_MATCH
                       matchScore: 87
@@ -192,7 +192,7 @@ paths:
                     timestamp: "2026-02-06T14:30:01Z"
                     responder:
                       bic: PRYBUA2XXXX
-                      nbuId: "300023"
+                      nbuId: "305299"
                     result:
                       matchStatus: NO_MATCH
                       matchScore: 35
@@ -207,7 +207,7 @@ paths:
                     timestamp: "2026-02-06T14:30:01Z"
                     responder:
                       bic: PRYBUA2XXXX
-                      nbuId: "300023"
+                      nbuId: "305299"
                     result:
                       matchStatus: NO_MATCH
                       matchScore: 0
@@ -221,7 +221,7 @@ paths:
                     timestamp: "2026-02-06T14:30:01Z"
                     responder:
                       bic: PRYBUA2XXXX
-                      nbuId: "300023"
+                      nbuId: "305299"
                     result:
                       matchStatus: NOT_SUPPORTED
                       reasonCode: OPTO
@@ -234,7 +234,7 @@ paths:
                     timestamp: "2026-02-06T14:30:01Z"
                     responder:
                       bic: PRYBUA2XXXX
-                      nbuId: "300023"
+                      nbuId: "305299"
                     result:
                       matchStatus: NO_MATCH
                       matchScore: 0
@@ -522,7 +522,7 @@ components:
           type: string
           pattern: '^\d{6}$'
           description: NBU ID учасника СЕП (6 цифр)
-          example: "300023"
+          example: "305299"
 
     PayeeInfo:
       type: object

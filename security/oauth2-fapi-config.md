@@ -38,7 +38,7 @@ VoP використовує **OAuth 2.0 + FAPI** (Financial-grade API) для �
 
 1. mTLS Handshake
    Client ──[Certificate]──> VoP Router
-   VoP Router: "OK, ти ПриватБанк (NBU ID: 300023)"
+   VoP Router: "OK, ти ПриватБанк (NBU ID: 305299)"
                                   │
                                   ▼
 2. OAuth 2.0 Authorization
@@ -47,7 +47,7 @@ VoP використовує **OAuth 2.0 + FAPI** (Financial-grade API) для �
                                   │
                                   ▼
 3. API Request Processing
-   VoP Router: "ПриватБанк (300023) має право на vop:write"
+   VoP Router: "ПриватБанк (305299) має право на vop:write"
    VoP Router → Responder API
 ```
 
@@ -104,7 +104,7 @@ VoP використовує **Client Credentials Grant** для machine-to-mach
         ├──────────────────────────>│
         │   POST /oauth/token       │
         │   grant_type=client_credentials
-        │   client_id=300023        │
+        │   client_id=305299        │
         │   client_assertion=JWT    │
         │   scope=vop:write         │
         │                           │
@@ -186,7 +186,7 @@ VoP використовує **Client Credentials Grant** для machine-to-mach
 ```json
 {
   "client_name": "АТ ПриватБанк VoP Client",
-  "client_id": "300023",  // NBU ID як client_id
+  "client_id": "305299",  // NBU ID як client_id
   "redirect_uris": [],    // Not needed для client credentials flow
   "grant_types": ["client_credentials"],
   "token_endpoint_auth_method": "private_key_jwt",  // FAPI requirement
@@ -197,7 +197,7 @@ VoP використовує **Client Credentials Grant** для machine-to-mach
 ```
 
 **НБУ надасть вам:**
-- `client_id` (ваш NBU ID, наприклад "300023")
+- `client_id` (ваш NBU ID, наприклад "305299")
 - Confirmation що ваш клієнт зареєстрований
 
 ### Крок 2: Генерація JWT Signing Key
@@ -246,7 +246,7 @@ POST https://auth.sep.nbu.gov.ua/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=client_credentials
-&client_id=300023
+&client_id=305299
 &scope=vop:write
 &client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer
 &client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InByaXZhdGJhbmstand0LTIwMjYifQ.eyJpc3MiOiIzMDAwMjMiLCJzdWIiOiIzMDAwMjMiLCJhdWQiOiJodHRwczovL2F1dGguc2VwLm5idS5nb3YudWEvb2F1dGgvdG9rZW4iLCJleHAiOjE3MDcyMjMyMDAsImlhdCI6MTcwNzIyMjkwMCwianRpIjoiNTUwZTg0MDAtZTI5Yi00MWQ0LWE3MTYtNDQ2NjU1NDQwMDAwIn0.signature
@@ -255,8 +255,8 @@ grant_type=client_credentials
 **client_assertion JWT payload:**
 ```json
 {
-  "iss": "300023",                   // Issuer = your client_id
-  "sub": "300023",                   // Subject = your client_id
+  "iss": "305299",                   // Issuer = your client_id
+  "sub": "305299",                   // Subject = your client_id
   "aud": "https://auth.sep.nbu.gov.ua/oauth/token",  // Token endpoint
   "exp": 1707223200,                 // Expiration (max 5 min від iat)
   "iat": 1707222900,                 // Issued at
@@ -289,12 +289,12 @@ Header:
 ```json
 {
   "iss": "https://auth.sep.nbu.gov.ua",
-  "sub": "300023",
+  "sub": "305299",
   "aud": "https://vop-router.sep.nbu.gov.ua",
   "exp": 1707223200,
   "iat": 1707222600,
   "scope": "vop:write",
-  "client_id": "300023",
+  "client_id": "305299",
   "cnf": {                  // mTLS certificate confirmation
     "x5t#S256": "bwcK0esc3ACC3DB2Y5..."  // Certificate thumbprint
   }
@@ -374,7 +374,7 @@ class VopTokenManager {
       },
       body: new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: '300023',
+        client_id: '305299',
         scope: 'vop:write',
         client_assertion_type: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
         client_assertion: clientAssertion
@@ -397,8 +397,8 @@ class VopTokenManager {
     const privateKey = fs.readFileSync('./jwt-signing.key');
 
     const payload = {
-      iss: '300023',
-      sub: '300023',
+      iss: '305299',
+      sub: '305299',
       aud: 'https://auth.sep.nbu.gov.ua/oauth/token',
       exp: Math.floor(Date.now() / 1000) + 300,  // 5 min
       iat: Math.floor(Date.now() / 1000),
@@ -602,7 +602,7 @@ curl -X POST https://auth.sep.nbu.gov.ua/oauth/token \
   --cert vop-client.crt \
   --key vop-client.key \
   -d "grant_type=client_credentials" \
-  -d "client_id=300023" \
+  -d "client_id=305299" \
   -d "scope=vop:write" \
   -d "client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer" \
   -d "client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
@@ -628,7 +628,7 @@ curl -X POST https://vop-router.sep.nbu.gov.ua/api/vop/v1/verify \
   -d '{
     "requestId": "test-123",
     "timestamp": "2026-02-06T10:00:00Z",
-    "requester": {"nbuId": "300023"},
+    "requester": {"nbuId": "305299"},
     "payee": {"iban": "UA213223130000026007233566001", "name": "TEST"}
   }'
 ```

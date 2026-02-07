@@ -403,7 +403,7 @@ To: vop-support@bank.gov.ua
 Subject: Certificate Revocation Notification
 
 Bank: АТ "ПриватБанк"
-NBU ID: 300023
+NBU ID: 305299
 Certificate: vop.privatbank.ua (Serial: 1234567890ABCDEF)
 Status: Revocation requested from QTSP (ІСС)
 Reason: [Key Compromise]

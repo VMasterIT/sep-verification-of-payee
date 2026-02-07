@@ -90,8 +90,8 @@
 **Схема даних:**
 ```json
 {
-  "participantId": "300023",
-  "nbuId": "300023",
+  "participantId": "305299",
+  "nbuId": "305299",
   "bic": "PRYBUA2XXXX",
   "name": "ПриватБанк",
   "status": "ACTIVE",

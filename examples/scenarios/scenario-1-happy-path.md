@@ -5,7 +5,7 @@
 **Учасники:**
 - **Клієнт-платник:** Олена Петренко (рахунок в NBU Bank)
 - **Банк-відправник:** NBU Bank (Код ID НБУ: 300001)
-- **Банк-отримувач:** ПриватБанк (Код ID НБУ: 300023)
+- **Банк-отримувач:** ПриватБанк (Код ID НБУ: 305299)
 - **Отримувач платежу:** Тарас Шевченко (рахунок в ПриватБанку)
 
 **Тип операції:** Миттєвий переказ (Instant Payment) на суму 1000 UAH
@@ -150,7 +150,7 @@ Response:
 {
   "bankCode": "322313",
   "participant": {
-    "nbuId": "300023",
+    "nbuId": "305299",
     "bic": "PRYBUA2XXXX",
     "name": "ПриватБанк",
     "vopResponderUrl": "https://vop.privatbank.ua/api/v1/verify",
@@ -276,11 +276,11 @@ if max_score >= 95:
   "timestamp": "2026-02-06T14:30:00.850Z",
   "responder": {
     "bic": "PRYBUA2XXXX",
-    "nbuId": "300023"
+    "nbuId": "305299"
   },
   "result": {
     "matchStatus": "MATCH",
-    "matchScore": 95,
+    "matchScore": 100,
     "reasonCode": "ANNM",
     "reasonDescription": "Account name match",
     "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
@@ -301,7 +301,7 @@ VoP Router отримує відповідь від ПриватБанку:
 ```
 [2026-02-06T14:30:01.050Z] INFO: VoP Response received from Responder
   RequestID: 550e8400-e29b-41d4-a716-446655440000
-  Responder: PRYBUA2XXXX (300023)
+  Responder: PRYBUA2XXXX (305299)
   MatchStatus: MATCH
   ResponderLatency: 800ms
 ```
@@ -325,11 +325,11 @@ X-Response-Time: 850
   "timestamp": "2026-02-06T14:30:01.000Z",
   "responder": {
     "bic": "PRYBUA2XXXX",
-    "nbuId": "300023"
+    "nbuId": "305299"
   },
   "result": {
     "matchStatus": "MATCH",
-    "matchScore": 95,
+    "matchScore": 100,
     "reasonCode": "ANNM",
     "reasonDescription": "Account name match",
     "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
@@ -352,7 +352,7 @@ Backend NBU Bank отримує VoP Response та форматує для UI:
   "status": "success",
   "matchStatus": "MATCH",
   "message": "✅ Реквізити підтверджені",
-  "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ",
+  "verifiedName": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
   "accountStatus": "ACTIVE",
   "action": "CONTINUE"
 }
@@ -365,7 +365,7 @@ Backend NBU Bank отримує VoP Response та форматує для UI:
 │  ✅ Реквізити підтверджені     │
 ├────────────────────────────────┤
 │ Отримувач:                     │
-│ ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ    │
+│ ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ      │
 │                                │
 │ IBAN:                          │
 │ UA213223130000026007233566001  │
@@ -395,7 +395,7 @@ Backend NBU Bank отримує VoP Response та форматує для UI:
 │ ✅ Реквізити перевірені        │
 │                                │
 │ Отримувач:                     │
-│ ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ    │
+│ ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ      │
 │                                │
 │ Сума: 1000 UAH                 │
 │                                │
@@ -443,7 +443,7 @@ Backend NBU Bank отримує VoP Response та форматує для UI:
         </FinInstnId>
       </CdtrAgt>
       <Cdtr>
-        <Nm>ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ</Nm>
+        <Nm>ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ</Nm>
       </Cdtr>
       <CdtrAcct>
         <Id>
@@ -515,7 +515,7 @@ NBU Bank отримує підтвердження від СЕП та відпр
 │ 1000 UAH відправлено           │
 │                                │
 │ Отримувач:                     │
-│ ШЕВЧЕНКО ТАРАС ГРИГОРІЙОВИЧ    │
+│ ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ      │
 │                                │
 │ Дата: 06.02.2026 14:30         │
 │ Статус: Виконано               │

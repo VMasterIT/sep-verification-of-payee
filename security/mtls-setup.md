@@ -126,7 +126,7 @@ Extended Key Usage: TLS Web Client Authentication, TLS Web Server Authentication
 | Organization (O) | `АТ "ПриватБанк"` | Повна назва банку |
 | Organizational Unit (OU) | `VoP API` | Підрозділ |
 | Country (C) | `UA` | Код країни |
-| NBU ID (custom field) | `300023` | Код ID НБУ (6 цифр) |
+| NBU ID (custom field) | `305299` | Код ID НБУ (6 цифр) |
 
 **Додаткові вимоги:**
 - Subject Alternative Names (SAN): мають включати DNS name VoP API endpoint

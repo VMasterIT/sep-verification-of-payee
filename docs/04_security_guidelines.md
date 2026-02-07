@@ -213,13 +213,13 @@ def is_authorized_participant(client_dn):
   },
   "payload": {
     "iss": "https://auth.nbu.gov.ua",
-    "sub": "300023",
+    "sub": "305299",
     "aud": "https://vop-router.nbu.gov.ua",
     "exp": 1707228000,
     "iat": 1707224400,
     "scope": "vop:request vop:respond",
     "bic": "PRYBUA2XXXX",
-    "nbu_id": "300023"
+    "nbu_id": "305299"
   },
   "signature": "..."
 }
@@ -293,7 +293,7 @@ class TokenValidator {
 POST /vop/v1/verify
 Authorization: Bearer {access_token}
 X-API-Key: {bank_api_key}
-X-NBU-ID: 300023
+X-NBU-ID: 305299
 ```
 
 ---

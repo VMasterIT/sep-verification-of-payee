@@ -134,7 +134,7 @@ Response:
   "iban": "UA213223130000026007233566001",
   "bankCode": "322313",
   "participant": {
-    "nbuId": "300023",
+    "nbuId": "305299",
     "bic": "PRYBUA2XXXX",
     "name": "ПриватБанк",
     "vopResponderUrl": "https://api.privatbank.ua/vop/v1/verify",
@@ -932,13 +932,13 @@ server {
 ```json
 {
   "iss": "https://auth.nbu.gov.ua",
-  "sub": "300023",
+  "sub": "305299",
   "aud": "https://vop-router.nbu.gov.ua",
   "exp": 1707228000,
   "iat": 1707224400,
   "scope": "vop:request vop:respond",
   "bic": "PRYBUA2XXXX",
-  "nbu_id": "300023"
+  "nbu_id": "305299"
 }
 ```
 
@@ -979,7 +979,7 @@ Response on rate limit exceeded:
   },
   "responder": {
     "bic": "PRYBUA2XXXX",
-    "nbu_id": "300023"
+    "nbu_id": "305299"
   },
   "payee": {
     "iban_masked": "UA21********66001",
