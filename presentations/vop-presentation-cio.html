@@ -367,7 +367,8 @@
 
         .timeline {
             position: relative;
-            padding: 30px 0;
+            padding: 20px 0 0 0;
+            margin-top: 10px;
         }
 
         .timeline-item {
@@ -410,6 +411,176 @@
         .timeline-content ul li {
             font-size: 1.1em;
             margin: 10px 0;
+        }
+
+        /* Fix for timeline slide */
+        .slide.timeline-slide .content {
+            justify-content: flex-start;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .slide.timeline-slide h2 {
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+        }
+
+        .slide.timeline-slide .timeline-item {
+            margin: 20px 0;
+        }
+
+        .slide.timeline-slide .timeline-content h3 {
+            font-size: 1.5em;
+            margin-top: 0;
+        }
+
+        .slide.timeline-slide .timeline-content ul li {
+            font-size: 1em;
+            margin: 8px 0;
+        }
+
+        /* Fix for budget slide */
+        .slide.budget-slide .content {
+            justify-content: flex-start;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .slide.budget-slide h2 {
+            font-size: 2.2em;
+            margin-bottom: 25px;
+        }
+
+        .slide.budget-slide .box h3 {
+            font-size: 1.3em;
+        }
+
+        .slide.budget-slide .box h4 {
+            font-size: 1.1em;
+            margin-top: 12px;
+            margin-bottom: 8px;
+        }
+
+        .slide.budget-slide .box ul li {
+            font-size: 0.95em;
+            margin: 6px 0;
+        }
+
+        .slide.budget-slide .highlight {
+            margin-top: 15px;
+            padding: 15px;
+        }
+
+        .slide.budget-slide .highlight p {
+            font-size: 1.1em;
+        }
+
+        /* Fix for perspectives slide */
+        .slide.perspectives-slide .content {
+            justify-content: flex-start;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .slide.perspectives-slide h2 {
+            font-size: 2.2em;
+            margin-bottom: 25px;
+        }
+
+        .slide.perspectives-slide .box {
+            padding: 20px;
+        }
+
+        .slide.perspectives-slide .box h3 {
+            font-size: 1.3em;
+            margin-bottom: 12px;
+        }
+
+        .slide.perspectives-slide .box ul li {
+            font-size: 1em;
+            margin: 8px 0;
+        }
+
+        .slide.perspectives-slide .highlight {
+            margin-top: 15px;
+            padding: 18px;
+        }
+
+        .slide.perspectives-slide .highlight h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .slide.perspectives-slide .highlight ul li {
+            font-size: 0.95em;
+            margin: 6px 0;
+        }
+
+        .slide.perspectives-slide > .content > div:last-child {
+            margin-top: 12px;
+            padding: 15px;
+        }
+
+        .slide.perspectives-slide > .content > div:last-child p {
+            font-size: 1.05em;
+            line-height: 1.4;
+        }
+
+        /* Fix for conclusions slide */
+        .slide.conclusions-slide .content {
+            justify-content: flex-start;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .slide.conclusions-slide h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+
+        .slide.conclusions-slide .conclusion-box {
+            padding: 25px;
+            margin: 15px 0;
+        }
+
+        .slide.conclusions-slide .conclusion-box h3 {
+            font-size: 1.5em;
+            margin-bottom: 12px;
+        }
+
+        .slide.conclusions-slide .conclusion-box p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .slide.conclusions-slide .two-column {
+            margin-top: 20px !important;
+            gap: 25px;
+        }
+
+        .slide.conclusions-slide .two-column h3 {
+            font-size: 1.4em;
+            margin-bottom: 12px;
+        }
+
+        .slide.conclusions-slide .two-column ul li {
+            font-size: 1em;
+            margin: 8px 0;
+        }
+
+        .slide.conclusions-slide > .content > div:last-child {
+            margin-top: 20px !important;
+            padding: 20px !important;
+        }
+
+        .slide.conclusions-slide > .content > div:last-child h3 {
+            font-size: 1.6em !important;
+        }
+
+        .slide.conclusions-slide > .content > div:last-child p {
+            font-size: 1.15em !important;
+            margin-top: 12px !important;
         }
 
         .badge {
@@ -756,8 +927,8 @@
                             <li><strong>API:</strong> RESTful JSON</li>
                             <li><strong>Протокол:</strong> HTTPS + mTLS</li>
                             <li><strong>Стандарт:</strong> ISO 20022</li>
-                            <li><strong>Автентифікація:</strong> OAuth 2.0 FAPI</li>
-                            <li><strong>Сертифікати:</strong> QWAC</li>
+                            <li><strong>Автентифікація:</strong> OAuth 2.0 FAPI (Financial-grade API)</li>
+                            <li><strong>Сертифікати:</strong> SSL/TLS (АЦСК / QWAC)</li>
                         </ul>
 
                         <h3 style="margin-top: 30px;">🔐 Безпека</h3>
@@ -931,7 +1102,7 @@
                     </div>
                     <div class="benefit-item">
                         <h4>😊 Клієнтський досвід</h4>
-                        <p>Впевненість клієнтів у правильності реквізитів. NPS +15-20 пунктів</p>
+                        <p>Впевненість клієнтів у правильності реквізитів. Підвищення задоволеності на 15-20%</p>
                     </div>
                     <div class="benefit-item">
                         <h4>📊 Операційна ефективність</h4>
@@ -954,7 +1125,7 @@
         </div>
 
         <!-- Slide 9: Implementation Plan -->
-        <div class="slide">
+        <div class="slide timeline-slide">
             <div class="content">
                 <h2>План впровадження</h2>
                 <div class="timeline">
@@ -1002,7 +1173,7 @@
                             <ul>
                                 <li>Всі типи переказів (звичайні + МП)</li>
                                 <li>Додаткові перевірки (ЄДРПОУ, ІПН тощо)</li>
-                                <li>Міжнародні перекази (опційно)</li>
+                                <li>Міжнародні перекази (в майбутньому)</li>
                                 <li>API для сторонніх сервісів</li>
                                 <li>Машинне навчання для співставлення</li>
                             </ul>
@@ -1013,7 +1184,7 @@
         </div>
 
         <!-- Slide 10: Resources and Budget -->
-        <div class="slide">
+        <div class="slide budget-slide">
             <div class="content">
                 <h2>Ресурси та бюджет</h2>
                 <div class="two-column">
@@ -1032,16 +1203,15 @@
 
                         <h4 style="font-size: 1.2em; margin-top: 15px; margin-bottom: 10px;">🖥️ ІТ Інфраструктура</h4>
                         <ul style="font-size: 1em;">
-                            <li>Kubernetes cluster (HA)</li>
-                            <li>Databases, Cache, Backup</li>
+                            <li>Кластер серверів (HA + DR)</li>
+                            <li>Databases, Backup, DR</li>
                             <li>Monitoring (Prometheus/Grafana)</li>
-                            <li>Load balancers</li>
+                            <li>Load balancers, API Gateways</li>
                         </ul>
 
                         <div style="margin-top: 15px; padding: 15px; background: #1e3c72; color: white; border-radius: 10px; text-align: center;">
                             <strong style="font-size: 1.1em;">Opex НБУ:</strong><br>
-                            <span style="font-size: 1.3em; font-weight: bold;">₴3-5 млн/рік</span><br>
-                            <span style="font-size: 0.9em;">(зарплата + інфраструктура)</span>
+                            <span style="font-size: 1em;">(зарплата + інфраструктура)</span>
                         </div>
                     </div>
 
@@ -1078,7 +1248,7 @@
         </div>
 
         <!-- Slide 12: Future Perspectives -->
-        <div class="slide">
+        <div class="slide perspectives-slide">
             <div class="content">
                 <h2>Перспективи розвитку</h2>
                 <div class="two-column">
@@ -1086,43 +1256,43 @@
                         <h3>🚀 Короткострокові (6-12 міс.)</h3>
                         <ul>
                             <li>Запуск для миттєвих переказів</li>
-                            <li>Підключення всіх банків-учасників СЕП</li>
-                            <li>Оптимізація алгоритмів matching</li>
+                            <li>Підключення всіх банків-учасників СЕП та ННПП</li>
+                            <li>Оптимізація алгоритмів співставлення</li>
                             <li>Інтеграція з мобільним банкінгом</li>
                             <li>Real-time аналітика та дашборди</li>
+                            <li>Внесення змін в НПА НБУ та Правила СЕП НБУ</li>
                         </ul>
                     </div>
                     <div class="box">
                         <h3>🌟 Середньострокові (12-24 міс.)</h3>
                         <ul>
                             <li>Розширення на всі типи платежів</li>
-                            <li>Machine Learning для matching</li>
-                            <li>API для fintech та PSP</li>
-                            <li>Перевірка LEI для корпорацій</li>
-                            <li>Інтеграція з Diia</li>
+                            <li>Машинне навчання для співставлення</li>
+                            <li>API для фінтех компаній та НПП</li>
+                            <li>Розширена перевірка для корпорацій</li>
+                            <li>API інтеграція з державними реєстрами</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="highlight" style="margin-top: 25px; padding: 25px;">
+                <div class="highlight">
                     <h3>🌍 Довгострокові перспективи (2+ роки)</h3>
-                    <ul style="font-size: 1.05em; line-height: 1.4;">
+                    <ul>
                         <li><strong>Міжнародна інтеграція:</strong> підключення до EU VoP</li>
                         <li><strong>Cross-border VoP:</strong> міжнародні перекази</li>
                         <li><strong>Open Banking:</strong> API для third-party providers</li>
                         <li><strong>AI-powered:</strong> виявлення шахрайських патернів</li>
-                        <li><strong>Blockchain:</strong> незмінний audit trail</li>
                     </ul>
                 </div>
 
-                <div style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 15px; border-left: 5px solid #27ae60;">
-                    <p style="font-size: 1.2em; line-height: 1.5;"><strong>Стратегічна мета:</strong> Зробити СЕП НБУ найбезпечнішою платіжною системою в регіоні</p>
+                <div style="margin-top: 12px; padding: 15px; background: #e8f5e9; border-radius: 15px; border-left: 5px solid #27ae60;">
+                    <p style="font-size: 1.05em; line-height: 1.4;"><strong>Стратегічна мета:</strong> Зробити СЕП НБУ найбезпечнішою платіжною системою в регіоні</p>
                 </div>
             </div>
         </div>
 
         <!-- Slide 13: Conclusions -->
-        <div class="slide">
+        <div class="slide conclusions-slide">
             <div class="content">
                 <h2>Висновки та рекомендації</h2>
 
@@ -1131,12 +1301,12 @@
                     <p>Verification of Payee — це не просто технічне рішення, а стратегічна інвестиція в безпеку, ефективність та довіру до національної платіжної системи</p>
                 </div>
 
-                <div class="two-column" style="margin-top: 30px;">
+                <div class="two-column">
                     <div>
                         <h3>✅ Чому потрібно впроваджувати?</h3>
                         <ul>
                             <li>Економія ₴1.25+ млрд/рік</li>
-                            <li>Зниження шахрайства на 30-40%</li>
+                            <li>Зниження помилок на 30-40%</li>
                             <li>Відповідність ЄС стандартам</li>
                             <li>Покращення клієнтського досвіду</li>
                             <li>Лідерство НБУ в інноваціях</li>
@@ -1147,27 +1317,27 @@
                     <div>
                         <h3>🎯 Рекомендації</h3>
                         <ul>
-                            <li><strong>Терміново:</strong> Затвердити проект та бюджет</li>
+                            <li><strong>Терміново:</strong> Затвердити ініціативу/проект</li>
                             <li><strong>Q2 2026:</strong> Почати розробку</li>
-                            <li><strong>Q3 2026:</strong> Запустити пілот</li>
-                            <li><strong>Q4 2026:</strong> Production для IP</li>
-                            <li><strong>2027:</strong> Повне розгортання</li>
-                            <li>Призначити project owner</li>
+                            <li><strong>Q4 2026:</strong> Запустити пілот / тестування</li>
+                            <li><strong>Q2 2027:</strong> Дослідно-промислова експлуатація для МП СЕП</li>
+                            <li><strong>2028:</strong> Повне розгортання</li>
+                            <li>Призначити власника продукту</li>
                             <li>Сформувати команду</li>
                         </ul>
                     </div>
                 </div>
 
-                <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; border-radius: 15px; text-align: center;">
-                    <h3 style="color: white; font-size: 2em;">⏰ Час діяти — ЗАРАЗ!</h3>
-                    <p style="font-size: 1.4em; margin-top: 20px;">ЄС впроваджує VoP з жовтня 2025. Україна має бути готова до інтеграції!</p>
+                <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; border-radius: 15px; text-align: center;">
+                    <h3 style="color: white;">⏰ Час діяти — ЗАРАЗ!</h3>
+                    <p>ЄС впроваджує VoP з жовтня 2025. Україна має бути готова до інтеграції!</p>
                 </div>
             </div>
         </div>
 
         <!-- Slide 14: Questions -->
         <div class="slide title-slide">
-            <h1>Дякую за увагу!</h1>
+            <h1>Дякуємо за увагу!</h1>
             <div class="subtitle">Запитання?</div>
             <div class="meta" style="margin-top: 60px;">
                 <p style="font-size: 1.3em; font-weight: 600; margin-bottom: 20px;">Контакти:</p>
