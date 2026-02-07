@@ -364,14 +364,14 @@ components:
           example: UA213052990000026007233566001
         recipientIdType:
           type: string
-          enum: [EDRPOU, RNOKPP, PASSPORT]
+          enum: [EDRPOU, PASSPORT, RNOKPP]
           description: Тип ідентифікаційного коду
           example: RNOKPP
         recipientIdCode:
           type: string
           minLength: 8
           maxLength: 20
-          description: Ідентифікаційний код (ЄДРПОУ, ІПН, паспорт)
+          description: Ідентифікаційний код (ЄДРПОУ, РНОКПП, паспорт)
           example: "1234567890"
         accountType:
           type: string

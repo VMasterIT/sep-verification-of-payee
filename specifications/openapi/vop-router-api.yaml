@@ -514,13 +514,13 @@ components:
             Тип ідентифікаційного коду:
             - EDRPOU - Код ЄДРПОУ (для юридичних осіб)
             - RNOKPP - Індивідуальний податковий номер (для фізичних осіб)
-            - PASSPORT - Паспорт (якщо немає ІПН)
+            - PASSPORT - Паспорт (якщо немає РНОКПП)
           example: RNOKPP
         identificationCode:
           type: string
           minLength: 8
           maxLength: 20
-          description: Ідентифікаційний код (ЄДРПОУ, ІПН, або номер паспорта)
+          description: Ідентифікаційний код (ЄДРПОУ, РНОКПП, або номер паспорта)
           example: "1234567890"
 
     VerificationResult:
