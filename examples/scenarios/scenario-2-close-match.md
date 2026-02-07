@@ -5,7 +5,7 @@
 **Учасники:**
 - **Клієнт-платник:** Андрій Коваль (рахунок в Universal Bank)
 - **Банк-відправник:** Universal Bank (Код ID НБУ: 300005)
-- **Банк-отримувач:** Ощадбанк (Код ID НБУ: 300012)
+- **Банк-отримувач:** Ощадбанк (Код ID НБУ: 300465)
 - **Отримувач платежу:** Олена Петренко (рахунок в Ощадбанку)
 
 **Тип операції:** Звичайний переказ на суму 5000 UAH
@@ -22,7 +22,7 @@
 
 ```
 Отримувач: PETRANKO OLENA IVANIVNA  ← Помилка: PETRANKO замість PETRENKO
-IBAN: UA903052990000026001234567890
+IBAN: UA903004650000026001234567890
 Сума: 5000 UAH
 Призначення платежу: Повернення боргу
 ```
@@ -39,7 +39,7 @@ IBAN: UA903052990000026001234567890
 │ [PETRANKO OLENA IVANIVNA    ] │ ← Помилка тут
 │                                │
 │ IBAN:                          │
-│ [UA903052990000026001234567890]│
+│ [UA903004650000026001234567890]│
 │                                │
 │ Сума:                          │
 │ [5000] UAH                     │
@@ -63,7 +63,7 @@ Content-Type: application/json
 
 {
   "recipientName": "PETRANKO OLENA IVANIVNA",
-  "recipientIban": "UA903052990000026001234567890",
+  "recipientIban": "UA903004650000026001234567890",
   "accountType": "PERSONAL",
   "paymentType": "REGULAR"
 }
@@ -82,7 +82,7 @@ Content-Type: application/json
     "nbuId": "300005"
   },
   "payee": {
-    "iban": "UA903052990000026001234567890",
+    "iban": "UA903004650000026001234567890",
     "name": "PETRANKO OLENA IVANIVNA",
     "identificationType": "RNOKPP",
     "identificationCode": "2345678901"
@@ -120,7 +120,7 @@ X-Request-ID: a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
     "nbuId": "300005"
   },
   "payee": {
-    "iban": "UA903052990000026001234567890",
+    "iban": "UA903004650000026001234567890",
     "name": "PETRANKO OLENA IVANIVNA",
     "identificationType": "RNOKPP",
     "identificationCode": "2345678901"
@@ -148,7 +148,7 @@ SELECT
   a.account_status
 FROM accounts a
 JOIN clients c ON a.client_id = c.client_id
-WHERE a.iban = 'UA903052990000026001234567890';
+WHERE a.iban = 'UA903004650000026001234567890';
 ```
 
 **Результат:**
@@ -158,7 +158,7 @@ client_id: 789012
 full_name: ПЕТРЕНКО ОЛЕНА ІВАНІВНА  ← Правильне ім'я в БД
 identification_type: RNOKPP
 identification_code: 2345678901
-iban: UA903052990000026001234567890
+iban: UA903004650000026001234567890
 account_status: ACTIVE
 ```
 
@@ -213,7 +213,7 @@ else:
   "timestamp": "2026-02-06T10:15:01.050Z",
   "responder": {
     "bic": "OSCHCHUA2XXX",
-    "nbuId": "300012"
+    "nbuId": "300465"
   },
   "result": {
     "matchStatus": "CLOSE_MATCH",
@@ -256,7 +256,7 @@ X-Response-Time: 900
   "timestamp": "2026-02-06T10:15:01.100Z",
   "responder": {
     "bic": "OSCHCHUA2XXX",
-    "nbuId": "300012"
+    "nbuId": "300465"
   },
   "result": {
     "matchStatus": "CLOSE_MATCH",
@@ -311,7 +311,7 @@ Backend Universal Bank отримує CLOSE_MATCH та форматує для U
 │ │ ПЕТРЕНКО ОЛЕНА ІВАНІВНА                        │    │
 │ └────────────────────────────────────────────────┘    │
 │                                                        │
-│ IBAN: UA903052990000026001234567890                    │
+│ IBAN: UA903004650000026001234567890                    │
 │ Статус рахунку: Активний                               │
 │ Сума: 5000 UAH                                         │
 │                                                        │
@@ -347,7 +347,7 @@ Backend Universal Bank отримує CLOSE_MATCH та форматує для U
 │ [ПЕТРЕНКО ОЛЕНА ІВАНІВНА    ] │ ← Автоматично виправлено
 │                                │
 │ IBAN:                          │
-│ [UA903052990000026001234567890]│
+│ [UA903004650000026001234567890]│
 │                                │
 │ Сума: 5000 UAH                 │
 │                                │
@@ -389,7 +389,7 @@ Backend Universal Bank отримує CLOSE_MATCH та форматує для U
 │ ПЕТРЕНКО ОЛЕНА ІВАНІВНА        │
 │                                │
 │ IBAN:                          │
-│ UA903052990000026001234567890  │
+│ UA903004650000026001234567890  │
 │                                │
 │ Сума: 5000 UAH                 │
 │                                │
@@ -597,7 +597,7 @@ NO_MATCH:     score < 75%    ← Low confidence, reject
   "request_id": "a1b2c3d4-...",
   "timestamp": "2026-02-06T10:15:01.200Z",
   "requester_nbu_id": "300005",
-  "responder_nbu_id": "300012",
+  "responder_nbu_id": "300465",
   "iban": "UA90********890",
   "entered_name_hash": "sha256:abc...",
   "verified_name_hash": "sha256:def...",
