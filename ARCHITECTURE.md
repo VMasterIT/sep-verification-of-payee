@@ -432,6 +432,8 @@
 
 ### Формат VoP Request
 
+**Примітка:** Поле `bic` є опціональним. Обов'язковим є тільки `nbuId` (МФО код). BIC використовується для майбутніх транскордонних переказів.
+
 ```json
 POST /vop/v1/verify
 Content-Type: application/json
@@ -441,8 +443,8 @@ Authorization: Bearer {access_token}
   "requestId": "550e8400-e29b-41d4-a716-446655440000",
   "timestamp": "2026-02-06T14:30:00Z",
   "requester": {
-    "bic": "NBUBUBU1XXX",
-    "nbuId": "300001"
+    "bic": "NBUBUBU1XXX",  // Опціонально
+    "nbuId": "300001"      // Обов'язково (МФО код)
   },
   "payee": {
     "iban": "UA213223130000026007233566001",
@@ -457,6 +459,8 @@ Authorization: Bearer {access_token}
 
 ### Формат VoP Response
 
+**Примітка:** Поле `bic` є опціональним. Обов'язковим є тільки `nbuId` (МФО код).
+
 ```json
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -465,8 +469,8 @@ Content-Type: application/json
   "requestId": "550e8400-e29b-41d4-a716-446655440000",
   "timestamp": "2026-02-06T14:30:01Z",
   "responder": {
-    "bic": "PRYBUA2XXXX",
-    "nbuId": "300023"
+    "bic": "PRYBUA2XXXX",  // Опціонально
+    "nbuId": "300023"      // Обов'язково (МФО код)
   },
   "result": {
     "matchStatus": "MATCH",

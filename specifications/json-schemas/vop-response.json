@@ -22,21 +22,21 @@
     "responder": {
       "type": "object",
       "description": "Інформація про банк-отримувач",
-      "required": ["bic", "nbuId"],
+      "required": ["nbuId"],
       "properties": {
         "bic": {
           "type": "string",
-          "description": "Bank Identifier Code (ISO 9362)",
+          "description": "Bank Identifier Code (ISO 9362). ОПЦІОНАЛЬНЕ поле. В СЕП НБУ використовується nbuId (МФО код). BIC може бути використаний в майбутньому для транскордонних переказів.",
           "pattern": "^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$",
           "minLength": 8,
           "maxLength": 11,
-          "examples": ["PRYBUA2XXXX", "PBANUA2X"]
+          "examples": ["PRYBUA2XXXX", "PBANUA2X", "MONOUA2X"]
         },
         "nbuId": {
           "type": "string",
-          "description": "Ідентифікатор учасника СЕП НБУ (6 цифр)",
+          "description": "МФО код (Міжбанківський ідентифікаційний код) - основний ідентифікатор учасника СЕП НБУ. 6 цифр.",
           "pattern": "^\\d{6}$",
-          "examples": ["300023", "300001"]
+          "examples": ["300023", "300001", "300346", "305299"]
         }
       },
       "additionalProperties": false
@@ -195,6 +195,22 @@
         "reasonDescription": "Client opted out from VoP"
       },
       "processingTime": 150
+    },
+    {
+      "requestId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "timestamp": "2026-02-06T14:30:01.200Z",
+      "responder": {
+        "nbuId": "305299"
+      },
+      "result": {
+        "matchStatus": "MATCH",
+        "matchScore": 100,
+        "reasonCode": "ANNM",
+        "reasonDescription": "Account name match",
+        "verifiedName": "ІВАНЕНКО ОЛЕНА ПЕТРІВНА",
+        "accountStatus": "ACTIVE"
+      },
+      "processingTime": 650
     },
     {
       "requestId": "550e8400-e29b-41d4-a716-446655440000",

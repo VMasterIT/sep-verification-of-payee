@@ -1,0 +1,16 @@
+{
+  "requestId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "timestamp": "2026-02-06T16:00:01.200Z",
+  "responder": {
+    "nbuId": "305299"
+  },
+  "result": {
+    "matchStatus": "MATCH",
+    "matchScore": 100,
+    "reasonCode": "ANNM",
+    "reasonDescription": "Account name match",
+    "verifiedName": "ІВАНЕНКО ОЛЕНА ПЕТРІВНА",
+    "accountStatus": "ACTIVE"
+  },
+  "processingTime": 650
+}
