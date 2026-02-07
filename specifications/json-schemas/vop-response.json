@@ -34,9 +34,9 @@
         },
         "nbuId": {
           "type": "string",
-          "description": "МФО код (Міжбанківський ідентифікаційний код) - основний ідентифікатор учасника СЕП НБУ. 6 цифр.",
+          "description": "Код ID НБУ (ідентифікатор учасника в Системі електронних платежів НБУ). 6 цифр. Основний ідентифікатор для маршрутизації платежів.",
           "pattern": "^\\d{6}$",
-          "examples": ["300023", "300001", "300346", "305299"]
+          "examples": ["300465", "305299", "322001", "322313"]
         }
       },
       "additionalProperties": false
@@ -137,7 +137,7 @@
       "timestamp": "2026-02-06T14:30:01Z",
       "responder": {
         "bic": "PRYBUA2XXXX",
-        "nbuId": "300023"
+        "nbuId": "305299"
       },
       "result": {
         "matchStatus": "MATCH",
@@ -154,7 +154,7 @@
       "timestamp": "2026-02-06T14:30:01Z",
       "responder": {
         "bic": "PRYBUA2XXXX",
-        "nbuId": "300023"
+        "nbuId": "305299"
       },
       "result": {
         "matchStatus": "CLOSE_MATCH",
@@ -171,7 +171,7 @@
       "timestamp": "2026-02-06T14:30:01Z",
       "responder": {
         "bic": "PRYBUA2XXXX",
-        "nbuId": "300023"
+        "nbuId": "305299"
       },
       "result": {
         "matchStatus": "NO_MATCH",
@@ -187,7 +187,7 @@
       "timestamp": "2026-02-06T14:30:01Z",
       "responder": {
         "bic": "PRYBUA2XXXX",
-        "nbuId": "300023"
+        "nbuId": "305299"
       },
       "result": {
         "matchStatus": "NOT_SUPPORTED",
