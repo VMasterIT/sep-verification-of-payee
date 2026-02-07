@@ -371,7 +371,7 @@ const payload = JSON.stringify({
     bic: 'NBUBUBU1XXX'
   },
   payee: {
-    iban: 'UA213223130000026007233566001',
+    iban: 'UA213052990000026007233566001',
     name: 'ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ'
   }
 });

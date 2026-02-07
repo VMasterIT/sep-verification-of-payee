@@ -114,7 +114,7 @@ paths:
                     bic: NBUBUBU1XXX
                     nbuId: "300001"
                   payee:
-                    iban: UA213223130000026007233566001
+                    iban: UA213052990000026007233566001
                     name: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
                     identificationType: RNOKPP
                     identificationCode: "1234567890"
@@ -534,7 +534,7 @@ components:
           type: string
           pattern: '^UA\d{27}$'
           description: IBAN отримувача (29 символів)
-          example: UA213223130000026007233566001
+          example: UA213052990000026007233566001
         name:
           type: string
           minLength: 1

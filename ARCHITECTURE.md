@@ -447,7 +447,7 @@ Authorization: Bearer {access_token}
     "nbuId": "300001"      // Обов'язково (Код ID НБУ)
   },
   "payee": {
-    "iban": "UA213223130000026007233566001",
+    "iban": "UA213052990000026007233566001",
     "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
     "identificationType": "RNOKPP",
     "identificationCode": "1234567890"

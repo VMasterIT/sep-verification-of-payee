@@ -126,12 +126,12 @@ PUT  /directory/v1/participants/{id}     - Оновлення учасника (
 **Приклад lookup за IBAN:**
 
 ```http
-GET /directory/v1/lookup/UA213223130000026007233566001
+GET /directory/v1/lookup/UA213052990000026007233566001
 Authorization: Bearer {token}
 
 Response:
 {
-  "iban": "UA213223130000026007233566001",
+  "iban": "UA213052990000026007233566001",
   "bankCode": "322313",
   "participant": {
     "nbuId": "305299",
@@ -427,7 +427,7 @@ VoP використовує JSON замість XML, але сумісний з
     </Assgnmt>
     <Vrfctn>
       <Id>
-        <IBAN>UA213223130000026007233566001</IBAN>
+        <IBAN>UA213052990000026007233566001</IBAN>
       </Id>
       <Nm>ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ</Nm>
     </Vrfctn>

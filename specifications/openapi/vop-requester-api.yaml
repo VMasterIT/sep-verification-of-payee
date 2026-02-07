@@ -73,7 +73,7 @@ paths:
                 summary: Особистий рахунок
                 value:
                   recipientName: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
-                  recipientIban: UA213223130000026007233566001
+                  recipientIban: UA213052990000026007233566001
                   recipientIdType: RNOKPP
                   recipientIdCode: "1234567890"
                   accountType: PERSONAL
@@ -361,7 +361,7 @@ components:
           type: string
           pattern: '^UA\d{27}$'
           description: IBAN отримувача (29 символів)
-          example: UA213223130000026007233566001
+          example: UA213052990000026007233566001
         recipientIdType:
           type: string
           enum: [EDRPOU, RNOKPP, PASSPORT]

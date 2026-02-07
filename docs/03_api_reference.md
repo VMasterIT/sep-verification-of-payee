@@ -275,7 +275,7 @@ X-Request-ID: 550e8400-e29b-41d4-a716-446655440000
     "nbuId": "300001"
   },
   "payee": {
-    "iban": "UA213223130000026007233566001",
+    "iban": "UA213052990000026007233566001",
     "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
     "identificationType": "RNOKPP",
     "identificationCode": "1234567890"
@@ -423,7 +423,7 @@ Authorization: Bearer {user_session_token}
 
 {
   "recipientName": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
-  "recipientIban": "UA213223130000026007233566001",
+  "recipientIban": "UA213052990000026007233566001",
   "recipientIdType": "RNOKPP",
   "recipientIdCode": "1234567890",
   "accountType": "PERSONAL",
@@ -506,7 +506,7 @@ X-Request-ID: 550e8400-e29b-41d4-a716-446655440000
     "nbuId": "300001"
   },
   "payee": {
-    "iban": "UA213223130000026007233566001",
+    "iban": "UA213052990000026007233566001",
     "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
     "identificationType": "RNOKPP",
     "identificationCode": "1234567890"
@@ -622,7 +622,7 @@ Authorization: Bearer {access_token}
 
 **Request:**
 ```http
-GET /directory/v1/lookup/UA213223130000026007233566001
+GET /directory/v1/lookup/UA213052990000026007233566001
 Host: vop-directory.sep.nbu.gov.ua
 Authorization: Bearer {access_token}
 ```
@@ -630,7 +630,7 @@ Authorization: Bearer {access_token}
 **Response (200 OK):**
 ```json
 {
-  "iban": "UA213223130000026007233566001",
+  "iban": "UA213052990000026007233566001",
   "bankCode": "322313",
   "participant": {
     "nbuId": "305299",
@@ -792,7 +792,7 @@ curl -X POST https://vop-router.sep.nbu.gov.ua/api/vop/v1/verify \
       "nbuId": "300001"
     },
     "payee": {
-      "iban": "UA213223130000026007233566001",
+      "iban": "UA213052990000026007233566001",
       "name": "ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ",
       "identificationType": "RNOKPP",
       "identificationCode": "1234567890"
@@ -838,7 +838,7 @@ curl -X POST https://vop-router.sep.nbu.gov.ua/api/vop/v1/verify \
       "nbuId": "300001"
     },
     "payee": {
-      "iban": "UA213223130000026007233566001",
+      "iban": "UA213052990000026007233566001",
       "name": "ШЕВЧЕНКО ТАРАС",
       "identificationType": "RNOKPP",
       "identificationCode": "1234567890"
@@ -884,7 +884,7 @@ curl -X POST https://vop-router.sep.nbu.gov.ua/api/vop/v1/verify \
       "nbuId": "300001"
     },
     "payee": {
-      "iban": "UA213223130000026007233566001",
+      "iban": "UA213052990000026007233566001",
       "name": "ПЕТРЕНКО ОЛЕГ ІВАНОВИЧ",
       "identificationType": "RNOKPP",
       "identificationCode": "9876543210"

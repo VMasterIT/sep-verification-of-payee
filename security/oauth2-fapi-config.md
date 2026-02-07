@@ -629,7 +629,7 @@ curl -X POST https://vop-router.sep.nbu.gov.ua/api/vop/v1/verify \
     "requestId": "test-123",
     "timestamp": "2026-02-06T10:00:00Z",
     "requester": {"nbuId": "305299"},
-    "payee": {"iban": "UA213223130000026007233566001", "name": "TEST"}
+    "payee": {"iban": "UA213052990000026007233566001", "name": "TEST"}
   }'
 ```
 

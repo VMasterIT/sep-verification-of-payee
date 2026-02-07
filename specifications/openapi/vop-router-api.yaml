@@ -88,7 +88,7 @@ paths:
                     bic: NBUBUBU1XXX
                     nbuId: "300001"
                   payee:
-                    iban: UA213223130000026007233566001
+                    iban: UA213052990000026007233566001
                     name: ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ
                     identificationType: RNOKPP
                     identificationCode: "1234567890"
@@ -212,7 +212,7 @@ paths:
                     error:
                       code: INVALID_IBAN
                       message: Invalid IBAN format or checksum
-                      details: "IBAN checksum validation failed for: UA213223130000026007233566001"
+                      details: "IBAN checksum validation failed for: UA213052990000026007233566001"
                       retryable: false
         '401':
           description: Невалідна автентифікація
@@ -500,7 +500,7 @@ components:
           type: string
           pattern: '^UA\d{27}$'
           description: IBAN отримувача (29 символів, UA + 27 цифр)
-          example: UA213223130000026007233566001
+          example: UA213052990000026007233566001
         name:
           type: string
           minLength: 1

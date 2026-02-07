@@ -171,7 +171,7 @@ def validate_iban_checksum(iban):
 ```python
 # Valid IBANs
 valid_ibans = [
-    'UA213223130000026007233566001',
+    'UA213052990000026007233566001',
     'UA903052990000026009011702860',
     'UA21 3223 1300 0002 6007 2335 6600 1'  # з пробілами
 ]
@@ -180,7 +180,7 @@ valid_ibans = [
 invalid_ibans = [
     'UA00000000000000000000000000000',  # Invalid checksum
     'UA2132231300000260072335660',      # Too short
-    'UA2132231300000260072335660011',   # Too long
+    'UA2130529900000260072335660011',   # Too long
     'DE89370400440532013000',           # Wrong country code
     'UA2X322313000002600723356600',     # Letters in digits
 ]

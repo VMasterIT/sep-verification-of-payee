@@ -693,12 +693,12 @@ describe('VoP Requester', () => {
   });
 
   test('should validate IBAN correctly', () => {
-    expect(requester.validateIBAN('UA213223130000026007233566001')).toBe(true);
+    expect(requester.validateIBAN('UA213052990000026007233566001')).toBe(true);
     expect(requester.validateIBAN('INVALID')).toBe(false);
   });
 
   test('should mask IBAN for logging', () => {
-    const masked = requester.maskIBAN('UA213223130000026007233566001');
+    const masked = requester.maskIBAN('UA213052990000026007233566001');
     expect(masked).toBe('UA21********66001');
   });
 
@@ -725,7 +725,7 @@ def test_vop_match():
     request = {
         'requestId': 'test-123',
         'payee': {
-            'iban': 'UA213223130000026007233566001',
+            'iban': 'UA213052990000026007233566001',
             'name': 'ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ'
         }
     }
@@ -741,7 +741,7 @@ def test_vop_close_match():
     request = {
         'requestId': 'test-124',
         'payee': {
-            'iban': 'UA213223130000026007233566001',
+            'iban': 'UA213052990000026007233566001',
             'name': 'ШЕВЧЕНКО ТАРАС'  # Відсутнє по батькові
         }
     }
