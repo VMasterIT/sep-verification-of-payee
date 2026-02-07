@@ -201,7 +201,7 @@ else:
 **Результат matching:**
 - Match Status: `CLOSE_MATCH`
 - Match Score: 92.0
-- Reason Code: `MBAM` (Multiple Best Approximate Matches)
+- Reason Code: `MBAM` (May Be A Match)
 
 **Час matching:** 120 мс
 
