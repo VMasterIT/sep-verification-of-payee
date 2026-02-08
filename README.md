@@ -287,5 +287,5 @@ sep_verification_of_payee/
 ---
 
 **Версія:** 1.0
-**Дата:** 2026-02-06
-**Статус:** Draft
+**Дата:** 2026-02-07
+**Статус:** Stable (Ready for Production)

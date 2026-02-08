@@ -1,0 +1,34 @@
+# VoP Project Code Owners
+# These owners will be automatically requested for review when someone opens a pull request.
+# Order is important; the last matching pattern takes precedence.
+
+# Default owners for everything in the repo
+* @nbu-sep-team
+
+# Documentation
+/docs/ @nbu-documentation-team
+/presentations/ @nbu-documentation-team
+/training/ @nbu-documentation-team
+*.md @nbu-documentation-team
+
+# Reference Implementation - Router
+/reference-implementation/router/ @nbu-backend-team @nbu-devops-team
+
+# Reference Implementation - Requester
+/reference-implementation/requester/ @nbu-sdk-team
+
+# Reference Implementation - Responder
+/reference-implementation/responder/ @nbu-backend-team
+
+# Name Matching Algorithm
+/reference-implementation/name-matching/ @nbu-algorithm-team
+
+# OpenAPI Specifications
+/specifications/openapi/ @nbu-api-team
+
+# Security
+/security/ @nbu-security-team
+SECURITY.md @nbu-security-team
+
+# Governance
+/governance/ @nbu-governance-team

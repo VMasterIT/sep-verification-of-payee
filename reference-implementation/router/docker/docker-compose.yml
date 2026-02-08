@@ -1,5 +1,12 @@
 version: '3.8'
 
+# ⚠️ WARNING: FOR DEVELOPMENT ONLY - DO NOT USE IN PRODUCTION ⚠️
+# This docker-compose file uses example credentials for local development.
+# For production deployment:
+# 1. Use environment variables: POSTGRES_PASSWORD=${DB_PASSWORD}
+# 2. Use Docker secrets or Kubernetes secrets
+# 3. Never commit real passwords to version control
+
 services:
   postgres:
     image: postgres:15-alpine
@@ -7,7 +14,8 @@ services:
     environment:
       POSTGRES_DB: vop_directory
       POSTGRES_USER: vop_user
-      POSTGRES_PASSWORD: secure_password
+      # ⚠️ EXAMPLE PASSWORD - Replace with environment variable in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secure_password}
     ports:
       - "5432:5432"
     volumes:

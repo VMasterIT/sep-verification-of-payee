@@ -21,7 +21,11 @@
     "client"
   ],
   "author": "NBU IT Department",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nbu-ukraine/sep-verification-of-payee.git"
+  },
   "engines": {
     "node": ">=20.0.0"
   },
