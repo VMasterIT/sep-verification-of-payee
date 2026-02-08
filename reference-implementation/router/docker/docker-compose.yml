@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: vop-postgres
+    environment:
+      POSTGRES_DB: vop_directory
+      POSTGRES_USER: vop_user
+      POSTGRES_PASSWORD: secure_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ../sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vop_user -d vop_directory"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vop-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: vop-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vop-network
+
+  vop-router:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: vop-router
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      TLS_CERT: /certs/server.crt
+      TLS_KEY: /certs/server.key
+      TLS_CA: /certs/ca.crt
+      MTLS_ENABLED: "true"
+      OAUTH_ISSUER: https://auth.nbu.gov.ua
+      OAUTH_AUDIENCE: vop-router
+      OAUTH_JWKS_URI: https://auth.nbu.gov.ua/.well-known/jwks.json
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: vop_directory
+      DB_USER: vop_user
+      DB_PASSWORD: secure_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      RATE_LIMIT_WINDOW_MS: 1000
+      RATE_LIMIT_MAX_REQUESTS: 100
+      REQUEST_TIMEOUT_MS: 5000
+      RESPONDER_TIMEOUT_MS: 3000
+      METRICS_ENABLED: "true"
+      METRICS_PORT: 9090
+      LOG_LEVEL: info
+      LOG_FORMAT: json
+    ports:
+      - "3000:3000"
+      - "9090:9090"
+    volumes:
+      - ./certs:/certs:ro
+      - vop-logs:/app/logs
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('https').get('https://localhost:3000/health', {rejectUnauthorized: false}, (res) => { process.exit(res.statusCode === 200 ? 0 : 1); }).on('error', () => process.exit(1));"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - vop-network
+
+volumes:
+  postgres-data:
+  redis-data:
+  vop-logs:
+
+networks:
+  vop-network:
+    driver: bridge

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vop-router-config
+data:
+  OAUTH_ISSUER: "https://auth.nbu.gov.ua"
+  OAUTH_AUDIENCE: "vop-router"
+  OAUTH_JWKS_URI: "https://auth.nbu.gov.ua/.well-known/jwks.json"
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_NAME: "vop_directory"
+  DB_MAX_CONNECTIONS: "20"
+  REDIS_HOST: "redis-service"
+  REDIS_PORT: "6379"
+  REDIS_DB: "0"
+  RATE_LIMIT_WINDOW_MS: "1000"
+  RATE_LIMIT_MAX_REQUESTS: "100"
+  REQUEST_TIMEOUT_MS: "5000"
+  RESPONDER_TIMEOUT_MS: "3000"
+  METRICS_ENABLED: "true"
+  METRICS_PORT: "9090"
+  LOG_LEVEL: "info"
+  LOG_FORMAT: "json"
