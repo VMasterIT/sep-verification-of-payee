@@ -74,28 +74,54 @@ VoP дозволяє банкам-відправникам перевіряти 
 ### Основні документи
 
 - [Архітектура](ARCHITECTURE.md) — детальна архітектура системи
-- [Бізнес-вимоги](docs/01_business_requirements.md) — бізнес-вимоги та use cases
-- [Технічна специфікація](docs/02_technical_specification.md) — технічні деталі
-- [API референс](docs/03_api_reference.md) — опис API endpoints
+- [Статус проекту](PROJECT_STATUS.md) — прогрес та огляд файлів
 
-### Специфікації
+### Повна документація (docs/)
+
+1. [Бізнес-вимоги](docs/01_business_requirements.md) — бізнес-вимоги та use cases
+2. [Технічна специфікація](docs/02_technical_specification.md) — технічні деталі
+3. [API референс](docs/03_api_reference.md) — опис API endpoints
+4. [Рекомендації з безпеки](docs/04_security_guidelines.md) — mTLS, OAuth 2.0, GDPR
+5. [Посібник впровадження](docs/05_implementation_guide.md) — інструкції для банків
+6. [Сценарії інтеграції](docs/06_integration_scenarios.md) — інтеграція з CBS, ESB, Payment Gateways
+7. [Алгоритми Name Matching](docs/07_name_matching_algorithm.md) — Levenshtein, Jaro-Winkler
+8. [Операційні процедури](docs/08_operational_procedures.md) — 24/7 моніторинг, incident response, DR
+
+### Навчальні матеріали (training/)
+
+- [Training Guide](training/VoP-Training-Guide.md) — повний посібник інтеграції (10 розділів)
+- [FAQ](training/VoP-FAQ.md) — часті питання (32 Q&A)
+- [Quick Start](training/VoP-Quick-Start.md) — швидкий старт (30 хвилин)
+
+### Презентації (presentations/)
+
+- [Презентація для стейкхолдерів](presentations/VoP-Stakeholder-Presentation.md) — 18 слайдів (проблема, рішення, ROI, roadmap)
+
+### Специфікації (specifications/)
 
 - [OpenAPI специфікації](specifications/openapi/) — REST API для всіх компонентів
 - [JSON Schemas](specifications/json-schemas/) — схеми валідації
-- [ISO 20022](specifications/iso20022/) — XML схеми (опційно)
+- [ISO 20022](specifications/iso20022/) — XML схеми та приклади
 
-### Правила та алгоритми
+### Правила та алгоритми (rules/)
 
 - [Правила співставлення імен](rules/matching_rules.md)
 - [Правила валідації](rules/validation_rules.md)
 - [Бізнес-правила](rules/business_rules.md)
 - [Коди причин](rules/reason_codes.md)
 
-### Приклади
+### Приклади (examples/)
 
 - [Приклади запитів](examples/requests/)
 - [Приклади відповідей](examples/responses/)
 - [Сценарії використання](examples/scenarios/)
+
+### Референсна реалізація (reference-implementation/)
+
+- [VoP Router](reference-implementation/router/) — Node.js/TypeScript, mTLS, OAuth, Kubernetes
+- [VoP Requester](reference-implementation/requester/) — TypeScript Client Library
+- [VoP Responder](reference-implementation/responder/) — Node.js/TypeScript Server
+- [Name Matching](reference-implementation/name-matching/) — Python implementation
 
 ## Швидкий старт
 
