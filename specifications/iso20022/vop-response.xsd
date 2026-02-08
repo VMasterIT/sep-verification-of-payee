@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  VoP Response XML Schema (ISO 20022 compatible)
+  Verification of Payee for NBU SEP
+  Version: 1.0
+  Date: 2026-02-07
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vop="urn:nbu:vop:xsd:vop.002.001.01"
+           targetNamespace="urn:nbu:vop:xsd:vop.002.001.01"
+           elementFormDefault="qualified">
+
+  <!-- Root element -->
+  <xs:element name="Document" type="vop:Document"/>
+
+  <!-- Document structure -->
+  <xs:complexType name="Document">
+    <xs:sequence>
+      <xs:element name="VrfctnOfPyeRspn" type="vop:VerificationOfPayeeResponseV01"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Verification of Payee Response V01 -->
+  <xs:complexType name="VerificationOfPayeeResponseV01">
+    <xs:sequence>
+      <!-- Group Header -->
+      <xs:element name="GrpHdr" type="vop:GroupHeader"/>
+
+      <!-- Verification Response Information -->
+      <xs:element name="VrfctnRspn" type="vop:VerificationResponse" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Group Header -->
+  <xs:complexType name="GroupHeader">
+    <xs:sequence>
+      <!-- Message Identification -->
+      <xs:element name="MsgId" type="vop:Max35Text">
+        <xs:annotation>
+          <xs:documentation>Unique identification of the response message</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Creation Date Time -->
+      <xs:element name="CreDtTm" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Date and time at which the response was created</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Original Message Identification -->
+      <xs:element name="OrgnlMsgId" type="vop:Max35Text" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Identification of the original request message</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Responding Party (Responder Bank) -->
+      <xs:element name="RspndgPty" type="vop:Party"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Verification Response -->
+  <xs:complexType name="VerificationResponse">
+    <xs:sequence>
+      <!-- Request Identification -->
+      <xs:element name="ReqId" type="vop:Max35Text">
+        <xs:annotation>
+          <xs:documentation>Identification of the original request</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Match Status -->
+      <xs:element name="MtchSts" type="vop:MatchStatus">
+        <xs:annotation>
+          <xs:documentation>Result of the name matching</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Match Score (Optional) -->
+      <xs:element name="MtchScr" type="vop:PercentageRate" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Matching score (0-100)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Verified Account Information -->
+      <xs:element name="VrfdAcct" type="vop:VerifiedAccount" minOccurs="0"/>
+
+      <!-- Reason Code -->
+      <xs:element name="RsnCd" type="vop:ReasonCode">
+        <xs:annotation>
+          <xs:documentation>Reason code for the match status</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Reason Description (Optional) -->
+      <xs:element name="RsnDesc" type="vop:Max500Text" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Description of the reason</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Match Status -->
+  <xs:simpleType name="MatchStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MATCH">
+        <xs:annotation>
+          <xs:documentation>Name matches</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CLOSE_MATCH">
+        <xs:annotation>
+          <xs:documentation>Name partially matches</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NO_MATCH">
+        <xs:annotation>
+          <xs:documentation>Name does not match</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NOT_SUPPORTED">
+        <xs:annotation>
+          <xs:documentation>Verification not supported</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ERROR">
+        <xs:annotation>
+          <xs:documentation>Error occurred during verification</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Reason Code -->
+  <xs:simpleType name="ReasonCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ANNM">
+        <xs:annotation>
+          <xs:documentation>Account Name Match</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MBAM">
+        <xs:annotation>
+          <xs:documentation>Match But Additional Match</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PANM">
+        <xs:annotation>
+          <xs:documentation>Partial Account Name Match</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ACNF">
+        <xs:annotation>
+          <xs:documentation>Account Not Found</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CLOS">
+        <xs:annotation>
+          <xs:documentation>Account Closed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SWCH">
+        <xs:annotation>
+          <xs:documentation>Account Switched</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TECH">
+        <xs:annotation>
+          <xs:documentation>Technical Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NSUP">
+        <xs:annotation>
+          <xs:documentation>Not Supported</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Verified Account -->
+  <xs:complexType name="VerifiedAccount">
+    <xs:sequence>
+      <!-- Verified Name -->
+      <xs:element name="VrfdNm" type="vop:Max140Text" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Verified account holder name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Account Name (Alternative name) -->
+      <xs:element name="AcctNm" type="vop:Max140Text" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Alternative account name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Account Type -->
+      <xs:element name="AcctTp" type="vop:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Type of account</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Account Status -->
+      <xs:element name="AcctSts" type="vop:AccountStatus" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Status of the account</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Account Type -->
+  <xs:simpleType name="AccountType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PERSONAL">
+        <xs:annotation>
+          <xs:documentation>Personal account</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BUSINESS">
+        <xs:annotation>
+          <xs:documentation>Business account</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Account Status -->
+  <xs:simpleType name="AccountStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACTIVE">
+        <xs:annotation>
+          <xs:documentation>Account is active</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="INACTIVE">
+        <xs:annotation>
+          <xs:documentation>Account is inactive</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CLOSED">
+        <xs:annotation>
+          <xs:documentation>Account is closed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BLOCKED">
+        <xs:annotation>
+          <xs:documentation>Account is blocked</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Party -->
+  <xs:complexType name="Party">
+    <xs:sequence>
+      <!-- Name -->
+      <xs:element name="Nm" type="vop:Max140Text" minOccurs="0"/>
+
+      <!-- Identification -->
+      <xs:element name="Id" type="vop:PartyIdentification" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Party Identification -->
+  <xs:complexType name="PartyIdentification">
+    <xs:choice>
+      <!-- BIC (Bank Identifier Code) -->
+      <xs:element name="BIC" type="vop:BICFIIdentifier">
+        <xs:annotation>
+          <xs:documentation>Bank Identifier Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Other Identification -->
+      <xs:element name="Othr" type="vop:GenericIdentification"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <!-- Generic Identification -->
+  <xs:complexType name="GenericIdentification">
+    <xs:sequence>
+      <xs:element name="Id" type="vop:Max35Text"/>
+      <xs:element name="SchmeNm" type="vop:Max35Text" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Percentage Rate -->
+  <xs:simpleType name="PercentageRate">
+    <xs:restriction base="xs:decimal">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="100"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- BIC FI Identifier (ISO 9362) -->
+  <xs:simpleType name="BICFIIdentifier">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Text Types -->
+  <xs:simpleType name="Max35Text">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Max140Text">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="140"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Max500Text">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="500"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

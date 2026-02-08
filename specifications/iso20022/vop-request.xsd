@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  VoP Request XML Schema (ISO 20022 compatible)
+  Verification of Payee for NBU SEP
+  Version: 1.0
+  Date: 2026-02-07
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vop="urn:nbu:vop:xsd:vop.001.001.01"
+           targetNamespace="urn:nbu:vop:xsd:vop.001.001.01"
+           elementFormDefault="qualified">
+
+  <!-- Root element -->
+  <xs:element name="Document" type="vop:Document"/>
+
+  <!-- Document structure -->
+  <xs:complexType name="Document">
+    <xs:sequence>
+      <xs:element name="VrfctnOfPyeReq" type="vop:VerificationOfPayeeRequestV01"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Verification of Payee Request V01 -->
+  <xs:complexType name="VerificationOfPayeeRequestV01">
+    <xs:sequence>
+      <!-- Group Header -->
+      <xs:element name="GrpHdr" type="vop:GroupHeader"/>
+
+      <!-- Verification Request Information -->
+      <xs:element name="VrfctnReq" type="vop:VerificationRequest" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Group Header -->
+  <xs:complexType name="GroupHeader">
+    <xs:sequence>
+      <!-- Message Identification -->
+      <xs:element name="MsgId" type="vop:Max35Text">
+        <xs:annotation>
+          <xs:documentation>Unique identification of the message</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Creation Date Time -->
+      <xs:element name="CreDtTm" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Date and time at which the message was created</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Number of Transactions -->
+      <xs:element name="NbOfTxs" type="vop:Max15NumericText" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Number of individual verification requests</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Requesting Party (Requester Bank) -->
+      <xs:element name="ReqgPty" type="vop:Party"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Verification Request -->
+  <xs:complexType name="VerificationRequest">
+    <xs:sequence>
+      <!-- Request Identification -->
+      <xs:element name="ReqId" type="vop:Max35Text">
+        <xs:annotation>
+          <xs:documentation>Unique identification of the verification request</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Payee Information -->
+      <xs:element name="Pyee" type="vop:Payee"/>
+
+      <!-- Additional Information (Optional) -->
+      <xs:element name="AddtlInf" type="vop:AdditionalInformation" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Payee -->
+  <xs:complexType name="Payee">
+    <xs:sequence>
+      <!-- Account Identification (IBAN) -->
+      <xs:element name="AcctId" type="vop:AccountIdentification">
+        <xs:annotation>
+          <xs:documentation>Account identification (IBAN)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Payee Name -->
+      <xs:element name="Nm" type="vop:Max140Text">
+        <xs:annotation>
+          <xs:documentation>Name of the payee as provided by the payer</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Account Type (Optional) -->
+      <xs:element name="AcctTp" type="vop:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Type of account (Personal/Business)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Account Identification -->
+  <xs:complexType name="AccountIdentification">
+    <xs:choice>
+      <xs:element name="IBAN" type="vop:IBAN2007Identifier">
+        <xs:annotation>
+          <xs:documentation>International Bank Account Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Othr" type="vop:GenericAccountIdentification">
+        <xs:annotation>
+          <xs:documentation>Other account identification</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+
+  <!-- Generic Account Identification -->
+  <xs:complexType name="GenericAccountIdentification">
+    <xs:sequence>
+      <xs:element name="Id" type="vop:Max34Text"/>
+      <xs:element name="SchmeNm" type="vop:Max35Text" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Account Type -->
+  <xs:simpleType name="AccountType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PERSONAL">
+        <xs:annotation>
+          <xs:documentation>Personal account</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BUSINESS">
+        <xs:annotation>
+          <xs:documentation>Business account</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Additional Information -->
+  <xs:complexType name="AdditionalInformation">
+    <xs:sequence>
+      <!-- Payment Amount (Optional) -->
+      <xs:element name="PmtAmt" type="vop:ActiveCurrencyAndAmount" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Amount of the payment</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Payment Purpose (Optional) -->
+      <xs:element name="PmtPurp" type="vop:Max140Text" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Purpose of the payment</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Party -->
+  <xs:complexType name="Party">
+    <xs:sequence>
+      <!-- Name -->
+      <xs:element name="Nm" type="vop:Max140Text" minOccurs="0"/>
+
+      <!-- Identification -->
+      <xs:element name="Id" type="vop:PartyIdentification" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Party Identification -->
+  <xs:complexType name="PartyIdentification">
+    <xs:choice>
+      <!-- BIC (Bank Identifier Code) -->
+      <xs:element name="BIC" type="vop:BICFIIdentifier">
+        <xs:annotation>
+          <xs:documentation>Bank Identifier Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- Other Identification -->
+      <xs:element name="Othr" type="vop:GenericIdentification"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <!-- Generic Identification -->
+  <xs:complexType name="GenericIdentification">
+    <xs:sequence>
+      <xs:element name="Id" type="vop:Max35Text"/>
+      <xs:element name="SchmeNm" type="vop:Max35Text" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Active Currency and Amount -->
+  <xs:complexType name="ActiveCurrencyAndAmount">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attribute name="Ccy" type="vop:ActiveCurrencyCode" use="required">
+          <xs:annotation>
+            <xs:documentation>Currency code (ISO 4217)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- Active Currency Code (ISO 4217) -->
+  <xs:simpleType name="ActiveCurrencyCode">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- BIC FI Identifier (ISO 9362) -->
+  <xs:simpleType name="BICFIIdentifier">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- IBAN Identifier (ISO 13616) -->
+  <xs:simpleType name="IBAN2007Identifier">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{2}[0-9]{2}[a-zA-Z0-9]{1,30}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Text Types -->
+  <xs:simpleType name="Max15NumericText">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{1,15}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Max34Text">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="34"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Max35Text">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Max140Text">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="140"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

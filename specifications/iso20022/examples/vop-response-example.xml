@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  VoP Response Example (ISO 20022 XML)
+  Scenario: Successful match
+-->
+<Document xmlns="urn:nbu:vop:xsd:vop.002.001.01"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VrfctnOfPyeRspn>
+    <!-- Group Header -->
+    <GrpHdr>
+      <MsgId>RSP-20260207-001</MsgId>
+      <CreDtTm>2026-02-07T10:30:00.450Z</CreDtTm>
+      <OrgnlMsgId>MSG-20260207-001</OrgnlMsgId>
+      <RspndgPty>
+        <Nm>ПриватБанк</Nm>
+        <Id>
+          <BIC>PBUA</BIC>
+        </Id>
+      </RspndgPty>
+    </GrpHdr>
+
+    <!-- Verification Response -->
+    <VrfctnRspn>
+      <ReqId>REQ-20260207-001</ReqId>
+      <MtchSts>MATCH</MtchSts>
+      <MtchScr>100.00</MtchScr>
+      <VrfdAcct>
+        <VrfdNm>ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ</VrfdNm>
+        <AcctTp>PERSONAL</AcctTp>
+        <AcctSts>ACTIVE</AcctSts>
+      </VrfdAcct>
+      <RsnCd>ANNM</RsnCd>
+    </VrfctnRspn>
+  </VrfctnOfPyeRspn>
+</Document>

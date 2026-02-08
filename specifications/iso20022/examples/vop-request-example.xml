@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  VoP Request Example (ISO 20022 XML)
+  Scenario: Personal account verification
+-->
+<Document xmlns="urn:nbu:vop:xsd:vop.001.001.01"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VrfctnOfPyeReq>
+    <!-- Group Header -->
+    <GrpHdr>
+      <MsgId>MSG-20260207-001</MsgId>
+      <CreDtTm>2026-02-07T10:30:00Z</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <ReqgPty>
+        <Nm>Національний банк України</Nm>
+        <Id>
+          <BIC>NBUA</BIC>
+        </Id>
+      </ReqgPty>
+    </GrpHdr>
+
+    <!-- Verification Request -->
+    <VrfctnReq>
+      <ReqId>REQ-20260207-001</ReqId>
+      <Pyee>
+        <AcctId>
+          <IBAN>UA213052990000026007233566001</IBAN>
+        </AcctId>
+        <Nm>ШЕВЧЕНКО ТАРАС ГРИГОРОВИЧ</Nm>
+        <AcctTp>PERSONAL</AcctTp>
+      </Pyee>
+      <AddtlInf>
+        <PmtAmt Ccy="UAH">5000.00</PmtAmt>
+        <PmtPurp>Salary payment</PmtPurp>
+      </AddtlInf>
+    </VrfctnReq>
+  </VrfctnOfPyeReq>
+</Document>
