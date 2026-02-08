@@ -1,0 +1,14 @@
+# VoP Name Matching - Python Dependencies
+
+# No external dependencies required for core functionality
+# All algorithms implemented natively in Python
+
+# Optional: for performance boost
+# python-Levenshtein>=0.21.1  # C-based Levenshtein (10x faster)
+
+# For testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# For benchmarking
+pytest-benchmark>=4.0.0
