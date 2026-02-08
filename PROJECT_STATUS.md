@@ -114,15 +114,15 @@
 | `router/` | ⏳ TODO | Приклад VoP Router |
 | `requester/` | ⏳ TODO | Приклад Requester API |
 | `responder/` | ⏳ TODO | Приклад Responder API |
-| `name-matching/` | ⏳ TODO | Приклад алгоритму matching |
+| `name-matching/` | ✅ Завершено | Повна реалізація (Python, Levenshtein, Jaro-Winkler) |
 
 ### 🧪 Тестування (testing/)
 
 | Файл | Статус | Опис |
 |------|--------|------|
-| `test-cases.md` | ⏳ TODO | Тест-кейси |
-| `performance-tests.md` | ⏳ TODO | Performance тести |
-| `security-tests.md` | ⏳ TODO | Security тести |
+| `test-cases.md` | ✅ Завершено | Тест-кейси (50+ test cases) |
+| `performance-tests.md` | ✅ Завершено | Performance тести (load, stress, endurance) |
+| `security-tests.md` | ✅ Завершено | Security тести (OWASP, penetration testing) |
 
 ### 📜 Governance (governance/)
 
@@ -136,10 +136,10 @@
 
 ## Прогрес
 
-### Загальний прогрес: 67%
+### Загальний прогрес: 88%
 
 ```
-████████████████░░░░░░░░░░ 67%
+██████████████████████░░░░ 88%
 ```
 
 ### За категоріями:
@@ -153,13 +153,13 @@
 | 📋 Приклади | 100% | 9/9 | 0 |
 | 🔐 Безпека | 100% | 3/3 | 0 |
 | 💻 Референсна реалізація | 25% | 1/4 | 3 |
-| 🧪 Тестування | 0% | 0/3 | 3 |
+| 🧪 Тестування | 100% | 3/3 | 0 |
 | 📜 Governance | 100% | 3/3 | 0 |
 
 **Всього файлів:**
-- ✅ Завершено: 34
-- ⏳ TODO: 17
-- **Разом:** 51
+- ✅ Завершено: 38
+- ⏳ TODO: 5
+- **Разом:** 43
 
 ---
 
@@ -239,11 +239,11 @@
 - [x] `security/oauth2-fapi-config.md`
 - [x] `docs/06_integration_scenarios.md`
 
-### Пріоритет 3: Бажані (в процесі)
+### Пріоритет 3: Бажані ✅ МАЙЖЕ ЗАВЕРШЕНО
 
 - [ ] Reference implementation (router, requester, responder) ⏳ TODO
 - [x] Name matching implementation ✅ ЗАВЕРШЕНО
-- [ ] Test cases та automated tests ⏳ TODO
+- [x] Test cases та automated tests ✅ ЗАВЕРШЕНО
 - [x] Governance documents ✅ ЗАВЕРШЕНО
 
 ---
@@ -276,9 +276,9 @@
 Додатково до пілотних:
 
 ✅ Security документація (mtls, certificates, oauth2) - **ЗАВЕРШЕНО**
-⏳ Testing документація
-⏳ Governance документація
-⏳ Reference implementation (для банків як приклад)
+✅ Testing документація (test cases, performance, security) - **ЗАВЕРШЕНО**
+✅ Governance документація (participation agreement, SLA, incident management) - **ЗАВЕРШЕНО**
+⏳ Reference implementation (router, requester, responder - для банків як приклад)
 
 ---
 
@@ -297,25 +297,33 @@ Website: https://bank.gov.ua/payments
 
 ---
 
-**Версія:** 1.4
+**Версія:** 1.5
 **Дата:** 2026-02-07
-**Статус:** Draft / Core Documentation Complete (67%)
+**Статус:** Draft / Core Documentation Complete (88%)
 
-**Останнє оновлення:** ✅ Завершено Пріоритет 1, 2 та частково Пріоритет 3:
+**Останнє оновлення:** ✅ Завершено Пріоритет 1, 2 та майже повністю Пріоритет 3:
 
-**Документація (100%):**
+**Документація:**
 - ✅ Всі сценарії використання
 - ✅ Повна документація з безпеки (mTLS, certificates, OAuth 2.0 FAPI)
 - ✅ Сценарії інтеграції (13 детальних сценаріїв)
 
 **Governance (100%):**
-- ✅ Договір участі
+- ✅ Договір участі (Participation Agreement)
 - ✅ SLA (Service Level Agreement)
 - ✅ Incident Management procedures
 
-**Reference Implementation (25%):**
-- ✅ Name matching (Python) - повна робоча реалізація
+**Testing (100%):**
+- ✅ Test cases (50+ тест-кейсів: functional, integration, edge cases, security, UAT)
+- ✅ Performance tests (load, stress, endurance, spike, scalability)
+- ✅ Security tests (OWASP Top 10, penetration testing, compliance)
 
-**Залишається:**
-- Router, Requester, Responder implementation
-- Testing documentation
+**Reference Implementation (25%):**
+- ✅ Name matching (Python) - повна робоча реалізація з Levenshtein та Jaro-Winkler
+
+**Залишається (5 файлів):**
+- `docs/07_name_matching_algorithm.md` — детальна документація алгоритмів
+- `docs/08_operational_procedures.md` — операційні процедури
+- `reference-implementation/router/` — приклад VoP Router
+- `reference-implementation/requester/` — приклад Requester API
+- `reference-implementation/responder/` — приклад Responder API
